@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="James Watson">
+
+<title>IPD meta-analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Meta_analysis_IPD_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Meta_analysis_IPD_files/libs/quarto-html/quarto.js"></script>
+<script src="Meta_analysis_IPD_files/libs/quarto-html/popper.min.js"></script>
+<script src="Meta_analysis_IPD_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Meta_analysis_IPD_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Meta_analysis_IPD_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Meta_analysis_IPD_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Meta_analysis_IPD_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Meta_analysis_IPD_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Meta_analysis_IPD_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="Meta_analysis_IPD_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Meta_analysis_IPD_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">IPD meta-analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>James Watson </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">cache =</span> F, <span class="at">cache.comments =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">echo =</span> F, <span class="at">include =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.width =</span> <span class="dv">8</span>, <span class="at">fig.height =</span> <span class="dv">8</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.pos =</span> <span class="st">'H'</span>,<span class="at">dev =</span> <span class="st">'png'</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: StanHeaders</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>rstan (Version 2.21.7, GitRev: 2e1f913d3ca3)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+✔ purrr   0.3.5      
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ tidyr::extract() masks rstan::extract()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+
+Attaching package: 'kableExtra'
+
+
+The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               _                           
+platform       aarch64-apple-darwin20      
+arch           aarch64                     
+os             darwin20                    
+system         aarch64, darwin20           
+status                                     
+major          4                           
+minor          2.2                         
+year           2022                        
+month          10                          
+day            31                          
+svn rev        83211                       
+language       R                           
+version.string R version 4.2.2 (2022-10-31)
+nickname       Innocent and Trusting       </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Ventura 13.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
+ [4] forcats_0.5.2        stringr_1.5.0        dplyr_1.0.10        
+ [7] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
+[10] tibble_3.1.8         tidyverse_1.3.2      rstan_2.21.7        
+[13] ggplot2_3.4.0        StanHeaders_2.21.0-7
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.4          splines_4.2.2       viridisLite_0.4.1  
+ [4] jsonlite_1.8.4      modelr_0.1.10       RcppParallel_5.1.5 
+ [7] assertthat_0.2.1    stats4_4.2.2        googlesheets4_1.0.1
+[10] cellranger_1.1.0    yaml_2.3.6          lattice_0.20-45    
+[13] pillar_1.8.1        backports_1.4.1     glue_1.6.2         
+[16] digest_0.6.31       rvest_1.0.3         colorspace_2.0-3   
+[19] Matrix_1.5-1        htmltools_0.5.4     pkgconfig_2.0.3    
+[22] broom_1.0.2         haven_2.5.1         webshot_0.5.4      
+[25] scales_1.2.1        processx_3.8.0      svglite_2.1.1      
+[28] tzdb_0.3.0          timechange_0.1.1    googledrive_2.0.0  
+[31] generics_0.1.3      ellipsis_0.3.2      withr_2.5.0        
+[34] cli_3.4.1           survival_3.4-0      magrittr_2.0.3     
+[37] crayon_1.5.2        readxl_1.4.1        evaluate_0.19      
+[40] ps_1.7.2            mice_3.15.0         fs_1.5.2           
+[43] fansi_1.0.3         xml2_1.3.3          pkgbuild_1.4.0     
+[46] tools_4.2.2         loo_2.5.1           prettyunits_1.1.1  
+[49] hms_1.1.2           gargle_1.2.1        lifecycle_1.0.3    
+[52] matrixStats_0.63.0  munsell_0.5.0       reprex_2.0.2       
+[55] callr_3.7.3         compiler_4.2.2      systemfonts_1.0.4  
+[58] rlang_1.0.6         grid_4.2.2          rstudioapi_0.14    
+[61] htmlwidgets_1.6.0   rmarkdown_2.19      boot_1.3-28        
+[64] gtable_0.3.1        codetools_0.2-18    inline_0.3.19      
+[67] DBI_1.1.3           R6_2.5.1            gridExtra_2.3      
+[70] lubridate_1.9.0     knitr_1.41          fastmap_1.1.0      
+[73] utf8_1.2.2          stringi_1.7.8       parallel_4.2.2     
+[76] Rcpp_1.0.9          vctrs_0.5.1         dbplyr_2.2.1       
+[79] tidyselect_1.2.0    xfun_0.35          </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkStrict(plot_serial_data): global variables used: daily_VL, ID,
+log10_viral_load, Time, Timepoint_ID, Trt, trt_color</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkStrict(calculate_fever_clearance): global variables used: ID,
+Time</code></pre>
+</div>
+</div>
+<section id="load-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-data"><em>Load data</em></h2>
+<p><em>Set up analysis</em></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Missing patients in Ivermectin arm:
+[1] "PLT-TH58-006" "PLT-TH58-008" "PLT-TH57-001" "PLT-TH57-003"
+Missing patients in Remdesivir arm:
+ [1] "PLT-TH58-005" "PLT-TH58-009" "PLT-TH57-007" "PLT-TH57-008" "PLT-BR3-003" 
+ [6] "PLT-BR3-012"  "PLT-BR3-013"  "PLT-BR3-016"  "PLT-BR3-019"  "PLT-BR3-022" 
+[11] "PLT-BR3-026"  "PLT-BR3-027"  "PLT-BR3-035" 
+Missing patients in No study drug arm:
+ [1] "PLT-TH1-056"  "PLT-TH1-635"  "PLT-TH1-637"  "PLT-TH1-643"  "PLT-TH1-644" 
+ [6] "PLT-TH1-654"  "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
+[11] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
+[16] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
+[21] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
+[26] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
+[31] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090" 
+Missing patients in Favipiravir arm:
+ [1] "PLT-TH57-004" "PLT-TH57-006" "PLT-BR3-001"  "PLT-BR3-005"  "PLT-BR3-007" 
+ [6] "PLT-BR3-009"  "PLT-BR3-014"  "PLT-BR3-015"  "PLT-BR3-023"  "PLT-BR3-025" 
+[11] "PLT-BR3-028"  "PLT-BR3-029"  "PLT-BR3-036"  "PLT-BR3-037"  "PLT-BR3-047" 
+[16] "PLT-BR3-049"  "PLT-BR3-051"  "PLT-BR3-056"  "PLT-BR3-058"  "PLT-BR3-059" 
+Missing patients in Molnupiravir arm:
+[1] "PLT-TH1-634" "PLT-TH1-638" "PLT-TH1-639" "PLT-TH1-640" "PLT-TH1-648"
+[6] "PLT-TH1-651"
+Missing patients in Nirmatrelvir + Ritonavir arm:
+[1] "PLT-TH1-450" "PLT-TH1-636" "PLT-TH1-647" "PLT-TH1-653"</code></pre>
+</div>
+</div>
+</section>
+<section id="make-modified-intention-to-treat-population" class="level2">
+<h2 class="anchored" data-anchor-id="make-modified-intention-to-treat-population"><em>Make modified intention to treat population</em></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                          mITT population
+Intervention               FALSE TRUE
+  Favipiravir                  0   96
+  Ivermectin                   2   40
+  Molnupiravir                 0   58
+  Nirmatrelvir + Ritonavir     0   55
+  No study drug                4  129
+  Remdesivir                   0   54</code></pre>
+</div>
+</div>
+</section>
+<section id="baseline-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-characteristics"><em>Baseline characteristics</em></h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>The following `from` values were not present in `x`: Regeneron, Nitazoxanide, Fluoxetine, Evusheld, Ensitrelvir</code></pre>
+</div>
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Baseline characteristics</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Dependent: Trt </th>
+   <th style="text-align:right;">   </th>
+   <th style="text-align:left;"> No study drug </th>
+   <th style="text-align:right;"> Ivermectin </th>
+   <th style="text-align:right;"> Remdesivir </th>
+   <th style="text-align:right;"> Favipiravir </th>
+   <th style="text-align:left;"> Molnupiravir </th>
+   <th style="text-align:right;"> Nirmatrelvir + Ritonavir </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Site </td>
+   <td style="text-align:right;"> th001 </td>
+   <td style="text-align:left;"> 129 (100.0) </td>
+   <td style="text-align:right;"> 40 (100.0) </td>
+   <td style="text-align:right;"> 54 (100.0) </td>
+   <td style="text-align:right;"> 96 (100.0) </td>
+   <td style="text-align:left;"> 58 (100.0) </td>
+   <td style="text-align:right;"> 55 (100.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Age </td>
+   <td style="text-align:right;"> Mean (SD) </td>
+   <td style="text-align:left;"> 30.5 (7.3) </td>
+   <td style="text-align:right;"> 30.5 (7.1) </td>
+   <td style="text-align:right;"> 30.6 (8.4) </td>
+   <td style="text-align:right;"> 29.8 (7.5) </td>
+   <td style="text-align:left;"> 31.1 (7.4) </td>
+   <td style="text-align:right;"> 30.7 (7.2) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BMI </td>
+   <td style="text-align:right;"> Mean (SD) </td>
+   <td style="text-align:left;"> 22.8 (3.4) </td>
+   <td style="text-align:right;"> 22.5 (3.3) </td>
+   <td style="text-align:right;"> 22.7 (2.8) </td>
+   <td style="text-align:right;"> 22.8 (3.7) </td>
+   <td style="text-align:left;"> 23.1 (3.8) </td>
+   <td style="text-align:right;"> 22.9 (3.1) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Weight </td>
+   <td style="text-align:right;"> Mean (SD) </td>
+   <td style="text-align:left;"> 62.3 (12.9) </td>
+   <td style="text-align:right;"> 62.0 (12.6) </td>
+   <td style="text-align:right;"> 63.7 (10.9) </td>
+   <td style="text-align:right;"> 62.4 (13.8) </td>
+   <td style="text-align:left;"> 63.6 (14.7) </td>
+   <td style="text-align:right;"> 63.5 (11.5) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baseline.viral.load </td>
+   <td style="text-align:right;"> Mean (SD) </td>
+   <td style="text-align:left;"> 5.6 (1.3) </td>
+   <td style="text-align:right;"> 5.7 (1.1) </td>
+   <td style="text-align:right;"> 5.7 (1.1) </td>
+   <td style="text-align:right;"> 5.6 (1.0) </td>
+   <td style="text-align:left;"> 5.6 (1.2) </td>
+   <td style="text-align:right;"> 5.5 (1.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sex </td>
+   <td style="text-align:right;"> Male </td>
+   <td style="text-align:left;"> 50 (38.8) </td>
+   <td style="text-align:right;"> 18 (45.0) </td>
+   <td style="text-align:right;"> 27 (50.0) </td>
+   <td style="text-align:right;"> 38 (39.6) </td>
+   <td style="text-align:left;"> 26 (44.8) </td>
+   <td style="text-align:right;"> 22 (40.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> Female </td>
+   <td style="text-align:left;"> 79 (61.2) </td>
+   <td style="text-align:right;"> 22 (55.0) </td>
+   <td style="text-align:right;"> 27 (50.0) </td>
+   <td style="text-align:right;"> 58 (60.4) </td>
+   <td style="text-align:left;"> 32 (55.2) </td>
+   <td style="text-align:right;"> 33 (60.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Variant </td>
+   <td style="text-align:right;"> Delta </td>
+   <td style="text-align:left;"> 9 (7.0) </td>
+   <td style="text-align:right;"> 11 (27.5) </td>
+   <td style="text-align:right;"> 10 (18.5) </td>
+   <td style="text-align:right;"> 11 (11.5) </td>
+   <td style="text-align:left;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> BA.1 </td>
+   <td style="text-align:left;"> 8 (6.2) </td>
+   <td style="text-align:right;"> 11 (27.5) </td>
+   <td style="text-align:right;"> 16 (29.6) </td>
+   <td style="text-align:right;"> 17 (17.7) </td>
+   <td style="text-align:left;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> BA.2 </td>
+   <td style="text-align:left;"> 69 (53.5) </td>
+   <td style="text-align:right;"> 18 (45.0) </td>
+   <td style="text-align:right;"> 28 (51.9) </td>
+   <td style="text-align:right;"> 38 (39.6) </td>
+   <td style="text-align:left;"> 27 (46.6) </td>
+   <td style="text-align:right;"> 26 (47.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> BA.4 </td>
+   <td style="text-align:left;"> 2 (1.6) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 3 (3.1) </td>
+   <td style="text-align:left;"> 2 (3.4) </td>
+   <td style="text-align:right;"> 3 (5.5) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> BA.5 </td>
+   <td style="text-align:left;"> 40 (31.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 27 (28.1) </td>
+   <td style="text-align:left;"> 29 (50.0) </td>
+   <td style="text-align:right;"> 26 (47.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> BA.3 </td>
+   <td style="text-align:left;"> 1 (0.8) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:left;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Symptom_onset </td>
+   <td style="text-align:right;"> Mean (SD) </td>
+   <td style="text-align:left;"> 2.1 (0.7) </td>
+   <td style="text-align:right;"> 2.2 (0.8) </td>
+   <td style="text-align:right;"> 2.4 (0.8) </td>
+   <td style="text-align:right;"> 2.1 (0.7) </td>
+   <td style="text-align:left;"> 2.1 (0.6) </td>
+   <td style="text-align:right;"> 2.0 (0.7) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Vaccinated </td>
+   <td style="text-align:right;"> Yes </td>
+   <td style="text-align:left;"> 124 (96.1) </td>
+   <td style="text-align:right;"> 39 (97.5) </td>
+   <td style="text-align:right;"> 51 (94.4) </td>
+   <td style="text-align:right;"> 94 (97.9) </td>
+   <td style="text-align:left;"> 54 (93.1) </td>
+   <td style="text-align:right;"> 54 (98.2) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> No </td>
+   <td style="text-align:left;"> 5 (3.9) </td>
+   <td style="text-align:right;"> 1 (2.5) </td>
+   <td style="text-align:right;"> 3 (5.6) </td>
+   <td style="text-align:right;"> 2 (2.1) </td>
+   <td style="text-align:left;"> 4 (6.9) </td>
+   <td style="text-align:right;"> 1 (1.8) </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="fit-models" class="level2">
+<h2 class="anchored" data-anchor-id="fit-models"><em>Fit models</em></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis dataset contains 432 patients and 7770 datapoints (6738 above LLOD, 87%)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>There are a total of 432 patients in the database with a total of 7770 PCRs analysable
+13.28% of samples are below LOD
+check stan data formatting:</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>We are running all models with 4 chains and 2000 samples for each chain, discarding 1000 for burn-in and thining every 4, thus giving a total of 1000 posterior samples per model.</code></pre>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<p><em>main model selection</em></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Timepoint_ID'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/Meta_analysis_main-1.png" class="img-fluid figure-img" width="2700"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>For model setting 1
+ 2.5%   10%   50%   90% 97.5% 
+  -24   -19    -7     4    12 
+[1] 0.001
+[1] 0.999
+ 2.5%   10%   50%   90% 97.5% 
+    7    15    29    45    55 
+[1] 0.774
+[1] 0.226
+ 2.5%   10%   50%   90% 97.5% 
+  -11    -7     2    11    17 
+[1] 0.005
+[1] 0.995
+ 2.5%   10%   50%   90% 97.5% 
+   22    30    45    60    71 
+[1] 0.984
+[1] 0.016
+ 2.5%   10%   50%   90% 97.5% 
+   61    72    91   112   124 
+[1] 1
+[1] 0
+For model setting 2
+ 2.5%   10%   50%   90% 97.5% 
+  -25   -20   -12    -2     3 
+[1] 0
+[1] 1
+ 2.5%   10%   50%   90% 97.5% 
+    4     9    20    32    39 
+[1] 0.509
+[1] 0.491
+ 2.5%   10%   50%   90% 97.5% 
+  -14   -10    -3     5    10 
+[1] 0
+[1] 1
+ 2.5%   10%   50%   90% 97.5% 
+   10    15    26    39    47 
+[1] 0.76
+[1] 0.24
+ 2.5%   10%   50%   90% 97.5% 
+   41    47    63    80    91 
+[1] 1
+[1] 0</code></pre>
+</div>
+</div>
+<div class="cell">
+
+</div>
+<p>ranking probabilistic</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.834</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.834</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

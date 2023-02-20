@@ -1,0 +1,271 @@
+---
+title: "IPD meta-analysis"
+author: "James Watson"
+format: html
+editor: visual
+---
+
+```{r preambule}
+knitr::opts_chunk$set(cache = F, cache.comments = FALSE,
+                      echo = F, include = TRUE, 
+                      fig.width = 8, fig.height = 8,
+                      fig.pos = 'H',dev = 'png', dpi = 300)
+
+```
+
+```{r setup}
+library(rstan)
+library(tidyverse)
+library(kableExtra)
+library(finalfit)
+library(RColorBrewer)
+
+## information on software/hardware used
+version
+sessionInfo()
+
+rstan_options(auto_write = TRUE)
+## parameters for the analysis
+Dmax = 8
+RUN_MODELS = F
+
+my_probs = c(0.025, 0.1, .5, .9, .975)
+source('functions.R')
+trt_colors = get_trt_colors()
+```
+
+## *Load data*
+
+*Set up analysis*
+
+```{r load_data}
+intervention = 'Paxlovid_Molnupiravir_meta' # prefix of analysis file
+ref_arm = 'No study drug'
+study_threshold = 1.2 # depending on comparison with no study drug or positive control
+```
+
+```{r define_population}
+#| echo: false
+# set as file with relevant dataset
+itt_population_all = get_itt_population()
+
+f_name = paste0(intervention,'_analysis.csv')
+platcov_dat = read.csv(f_name)
+platcov_dat$Rand_date = as.POSIXct(platcov_dat$Rand_date)
+trt_intervention = unique(platcov_dat$Trt)
+
+if(!all(platcov_dat$ID %in% itt_population_all$ID)) stop('IDs do not match ITT population')
+
+for(tt in unique(trt_intervention)){
+  writeLines(sprintf('Missing patients in %s arm:',tt))
+  print(itt_population_all$ID[itt_population_all$Treatment==tt &
+                          !itt_population_all$ID %in% platcov_dat$ID])
+}
+# interventions
+if(length(trt_intervention)==0) stop('no interventions!')
+trts = trt_intervention[trt_intervention!=ref_arm] # get interventions
+```
+
+## *Make modified intention to treat population*
+
+```{r make_analysis_data}
+#| echo: false
+platcov_dat = platcov_dat %>% group_by(ID) %>%
+  mutate(
+    mITT = any(Per_protocol_sample==1 & Timepoint_ID>=3) &
+      !all(CT_NS==40))
+
+pop_table = platcov_dat %>% distinct(ID, .keep_all = T)
+table(Intervention=pop_table$Trt, `mITT population` = pop_table$mITT)
+```
+
+## *Baseline characteristics*
+
+```{r}
+#| echo: false
+platcov_dat = platcov_dat %>% group_by(ID, Timepoint_ID) %>%
+  mutate(daily_VL = mean(log10_viral_load),
+         Sex = as.factor(ifelse(Sex==1,'Male','Female')),
+         Site = as.factor(Site),
+         Trt = factor(Trt, levels=c(ref_arm, trts)),
+         Vaccinated = as.factor(ifelse(N_dose>0,'Yes','No')),
+         Variant = as.factor(Variant)) %>% 
+  ungroup() %>%
+  mutate(trt_color = 
+           as.character(plyr::mapvalues(Trt,
+                                   from = names(trt_colors),
+                                   to = trt_colors)))
+
+Baseline_data = platcov_dat %>% ungroup() %>% 
+  distinct(ID, .keep_all = T) %>%
+  filter(Timepoint_ID==0) %>% 
+  mutate(Baseline.viral.load = daily_VL)
+
+tab.ff <- Baseline_data %>% filter(mITT) %>%
+  summary_factorlist(
+    dependent = "Trt", # name of grouping / treatment variable
+    explanatory = c("Site", "Age", 'BMI', "Weight",
+                    "Baseline.viral.load",'Sex', 
+                    "Variant",'Symptom_onset','Vaccinated'),
+    include_row_missing_col = FALSE,
+    add_dependent_label = T,
+    na_include = TRUE # make variables' missing data explicit
+  ) %>%
+  kbl(
+    caption = "Baseline characteristics",
+    booktabs = TRUE,
+    align = "lrlrrr",
+  ) %>%
+  kable_classic(full_width = FALSE)
+tab.ff
+# save_kable(tab.ff,file = 'Baseline_characteristics.png')
+```
+
+## *Fit models*
+
+```{r}
+#| echo: false
+source('priors.R')
+
+# Analysis data
+platcov_dat_analysis = 
+  platcov_dat %>% ungroup() %>%
+  filter(Time <= Dmax, mITT) %>%
+  arrange(log10_viral_load==log10_cens_vl) %>%
+  mutate(Variant = factor(Variant, levels = c('Delta','BA.1','BA.2','BA.3','BA.4','BA.5')),
+         Epoch = as.factor(Epoch),
+         Site = factor(Site, levels = c('th001','th057','th058','br003')),
+         RnaseP_scaled = scale(40 - CT_RNaseP,scale = F),
+         Mean_age = mean(Age[!duplicated(ID)]),
+         SD_age = sd(Age[!duplicated(ID)]),
+         Age_scaled = (Age-Mean_age)/SD_age,
+         Symptom_onset = ifelse(is.na(Symptom_onset),2,Symptom_onset)) 
+
+
+writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s above LLOD, %s%%)',
+                   length(unique(platcov_dat_analysis$ID)),
+                   nrow(platcov_dat_analysis),
+                   sum(platcov_dat_analysis$CT_NS<40),
+                   round(100*mean(platcov_dat_analysis$CT_NS<40))))
+
+covs_base = c('Variant', 'Epoch')
+covs_full=c(covs_base, 'Age_scaled','Symptom_onset', 'Sex')
+stan_inputs = 
+  make_stan_inputs(input_data_fit = platcov_dat_analysis,
+                   int_covs_base = covs_base,
+                   int_covs_full = covs_full,
+                   slope_covs_base = covs_base,
+                   slope_covs_full = covs_full,
+                   trt_frmla = formula('~ Trt'),
+                   Dmax = Dmax)
+```
+
+```{r setup_models}
+all_mods = list.files('Stan_models',full.names = TRUE,pattern = '*stan')
+
+model_settings = expand.grid(mod = all_mods[2:3],
+                             prior = 1,
+                             cov_matrices = 1)
+
+model_settings$Niter = 2000
+model_settings$Nwarmup = 1000
+model_settings$Nthin = 4
+model_settings$Nchain = 4
+
+writeLines(sprintf('We are running all models with %s chains and %s samples for each chain, discarding %s for burn-in and thining every %s, thus giving a total of %s posterior samples per model.',
+                   unique(model_settings$Nchain),
+                   unique(model_settings$Niter),
+                   unique(model_settings$Nwarmup),
+                   unique(model_settings$Nthin), 
+                   unique(model_settings$Nchain*(model_settings$Niter-model_settings$Nwarmup)/model_settings$Nthin)))
+
+model_setup_f_name = paste0('Rout/model_run_setup_',intervention,'.RData')
+save(model_settings, 
+     platcov_dat_analysis,
+     stan_inputs, 
+     all_priors,
+     file = model_setup_f_name)
+```
+
+```{r}
+if(RUN_MODELS){
+  system(paste('Rscript --vanilla run_models_local.R',intervention))
+}
+```
+
+```{r}
+ff = list.files('Rout/', pattern = intervention)
+ff = ff[grep(pattern = 'model_fits_',x = ff)]
+if(!length(ff)==nrow(model_settings)) stop('not all outputs are ready for all model settings')
+ff = paste0('Rout/',ff)
+```
+
+*main model selection*
+
+```{r}
+main_mod = which(model_settings$prior==1&
+                   model_settings$cov_matrices==1&
+                   model_settings$mod==all_mods[2])
+
+model_cols = brewer.pal(n = 8, name = 'Dark2')[1:nrow(model_settings)]
+names(model_cols) = paste('model', 1:nrow(model_settings))
+```
+
+```{r get_effects}
+effect_ests=list()
+for(i in 1:length(ff)){
+  load(ff[i])
+  effect_ests[[i]] = 
+    summary(out, pars='trt_effect',use_cache=F,probs=my_probs)$summary[,c('2.5%','10%','50%','90%','97.5%'),drop=F]
+  rownames(effect_ests[[i]]) = gsub(pattern = ' + ', replacement = '\n',x = trts,fixed = T)
+}
+```
+
+```{r Meta_analysis_main, fig.height=6, fig.width=9}
+par(las=1, mar=c(5,5,2,2),cex.lab=1.3, cex.axis=1.3, mfrow=c(1,2))
+plot_serial_data(xx = platcov_dat_analysis %>% mutate(Trt=gsub(pattern='+ Ritonavir',replacement='',x = Trt,fixed = T)),xlims = c(0,7),
+                 plot_points = T,alpha.f = .1)
+
+par(las=1, mar=c(5,8,2,2))
+plot_effect_estimates(effect_ests = effect_ests,
+                      plot_models = 1:length(ff),
+                      study_threshold = study_threshold,
+                      mod_cols = model_cols[1:length(ff)],
+                      my_pch = 15:16)
+# title(intervention)
+legend('bottomright',pch=15:16,legend = c('Linear','Non-linear'),
+       col = model_cols,inset=0.03, cex=1.2)
+
+for(i in 1:length(ff)){
+  load(ff[i])
+  writeLines(sprintf('For model setting %s', i))
+  trt_estimates = rstan::extract(out, pars = 'trt_effect')$trt_effect
+  for(j in 1:ncol(trt_estimates)){
+    print(round(100*(exp(quantile(trt_estimates[,j], probs = my_probs))-1)))
+    print(mean(trt_estimates[,j]>log(study_threshold)))
+    print(mean(trt_estimates[,j]<log(study_threshold)))
+  }
+}
+```
+
+```{r coef_plot}
+# coef_to_plot=1
+# coef_model = which(model_settings$prior==1&
+#                      model_settings$cov_matrices==coef_to_plot&
+#                      model_settings$mod==all_mods[2])
+# load(ff[coef_model])
+# par(las=1, mfrow=c(1,2), mar=c(5,7,2,2))
+# plot_coef_effects(stan_out = out,cov_mat = coef_to_plot,stan_inputs = stan_inputs)
+```
+
+ranking probabilistic
+
+```{r}
+load(ff[1])
+theta_trt = rstan::extract(out, pars='trt_effect')$trt_effect
+colnames(theta_trt) = gsub(pattern = 'Trt',replacement = '',x = colnames(stan_inputs$Trt_matrix)[-1])
+
+mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
+mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
+
+```

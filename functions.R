@@ -339,18 +339,13 @@ plot_data_model_fits =
            xaxt='n', yaxt='n',
            panel.first=grid(), xlim=c(0,7),
            ylim = range(analysis_data_stan$log_10_vl))
-      if(counter %% sqrt(K_plots) == 1){
-        mtext(text = 'SARS CoV2 genomes/mL',side = 2,
-              line = 3,las = 3)
-      }
+      
       axis(1, at = c(0,3,7))
       axis(2, at = c(2,4,6,8), labels = c(expression(10^2),
                                           expression(10^4),
                                           expression(10^6),
                                           expression(10^8)))
-      if((counter%%K_plots) >= K_plots - sqrt(K_plots)){
-        mtext(text = 'Days',side = 1,line = 2)
-      }
+      
       for(mm in models_to_plot){
         ix = order(analysis_data_stan$obs_day[ind])
         my_xs = analysis_data_stan$obs_day[ind][ix]
@@ -369,9 +364,9 @@ plot_data_model_fits =
              analysis_data_stan$log_10_vl[ind],pch=16)
       
       mtext(text = paste0(ID_map$ID_key[counter],
-                          '\n',
+                          ' ',
                           ID_map$Trt[counter]),
-            side = 3, line = -0.5, cex=0.8)
+            side = 3, line = 0.5, cex=0.8)
       counter=counter+1
     }
     
@@ -388,7 +383,6 @@ plot_individ_curves = function(platcov_dat, IDs, xlims){
   for(id in unique(IDs)){
     
     ind = platcov_dat$ID==id
-    xx = aggregate(log10_viral_load ~ Day, data = platcov_dat[ind,], mean)
     plot(platcov_dat$Time[ind],
          platcov_dat$log10_viral_load[ind],
          pch = as.numeric(platcov_dat$log10_cens_vl[ind]==platcov_dat$log10_viral_load[ind])+1,
@@ -396,8 +390,9 @@ plot_individ_curves = function(platcov_dat, IDs, xlims){
          xaxt='n', yaxt='n',
          panel.first=grid(), xlim=xlims,
          ylim = ylims)
+    # title(paste(id, platcov_dat$Trt[ind][1]))
     title(id)
-    lines(xx$Day, xx$log10_viral_load, lwd=2, lty=2)
+    lines(platcov_dat$Time[ind], platcov_dat$daily_VL[ind], lwd=2, lty=2,col='grey')
     points(platcov_dat$Time[ind],
            platcov_dat$log10_viral_load[ind],
            pch = as.numeric(platcov_dat$log10_cens_vl[ind]==platcov_dat$log10_viral_load[ind])+16)
@@ -537,7 +532,7 @@ make_slopes_plot = function(stan_out,
                             my_lims = c(5, 72), # hours
                             my_vals = c(7,24,48,72)){
   
-  slopes = rstan::extract(stan_out, pars='slope')$slope
+  slopes = -abs(rstan::extract(stan_out, pars='slope')$slope)
   
   t12_output = data.frame(t_12_med = 24*log10(.5)/(apply(slopes,2,mean)),
                           t_12_up = 24*log10(.5)/(apply(slopes,2,quantile,.9)),
@@ -651,7 +646,45 @@ get_trt_colors = function(plot_cols=F){
 }
 
 
+assess_rebound = function(patient_dat,
+                          lower_bound=2,  # lower level such that VL is defined as non-detectable
+                          upper_bound=4,  # upper level such that VL is defined as "high"
+                          t_window=1.5      # time window during which it has to be undetectable
+){
+  xx = patient_dat %>% arrange(Time) %>% distinct(Timepoint_ID, .keep_all = T)
+  rebound = virus_cleared = F
+  if(nrow(xx)>3){
+    for(i in 2:nrow(xx)){
+      ind = which(xx$Time <= xx$Time[i] & (xx$Time >= (xx$Time[i]-t_window)))
+      if(all(xx$daily_VL[ind] <= lower_bound)){
+        virus_cleared=T
+      }
+      if(virus_cleared & xx$daily_VL[i] >= upper_bound){
+        rebound = T
+        writeLines(sprintf('patient %s treated with %s had a rebound identified on day %s', 
+                           xx$ID[1], xx$Trt[1],xx$Timepoint_ID[i]))
+      }
+      # print(rebound)
+    }
+  }
+  return(rebound)
+}
 
+find_rebounds = function(platcov_dat, 
+                         lower_bound=2,  # lower level such that VL is defined as non-detectable
+                         upper_bound=4,  # upper level such that VL is defined as "high"
+                         t_window=2      # time window during which it has to be undetectable
+){
+  platcov_dat$rebound=NA
+  for(id in unique(platcov_dat$ID)){
+    ind=platcov_dat$ID==id
+    platcov_dat$rebound[ind] = assess_rebound(platcov_dat[ind,],
+                                              lower_bound = lower_bound,
+                                              upper_bound = upper_bound,
+                                              t_window = t_window)
+  }
+  return(platcov_dat)
+}
 
 
 checkStrict(make_stan_inputs)

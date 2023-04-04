@@ -77,6 +77,8 @@ platcov_dat = platcov_dat %>% group_by(ID) %>%
 
 pop_table = platcov_dat %>% distinct(ID, .keep_all = T)
 table(Intervention=pop_table$Trt, `mITT population` = pop_table$mITT)
+
+range(platcov_dat$Rand_date)
 ```
 
 ## *Baseline characteristics*
@@ -194,10 +196,20 @@ if(RUN_MODELS){
 ```
 
 ```{r}
-ff = list.files('Rout/', pattern = intervention)
+ff = list.files('Rout/', pattern = paste0(intervention,'.RData'))
 ff = ff[grep(pattern = 'model_fits_',x = ff)]
 if(!length(ff)==nrow(model_settings)) stop('not all outputs are ready for all model settings')
 ff = paste0('Rout/',ff)
+```
+
+## Check convergence
+
+```{r traceplots}
+ load(ff[1])
+ traceplot(out)
+ 
+ load(ff[2])
+ traceplot(out)
 ```
 
 *main model selection*

@@ -116,7 +116,7 @@ model {
   // random effects
   sigmasq_u[1] ~ exponential(1);
   sigmasq_u[2] ~ exponential(1);
-  sigmasq_u[3] ~ normal(1,1);
+  sigmasq_u[3] ~ normal(1,.5);
   L_Omega ~ lkj_corr_cholesky(3);  // covariance matrix - random effects for individs
   // individual random effects
   for(i in 1:n_id) theta_rand_id[i] ~ multi_normal_cholesky(zeros3, diag_pre_multiply(sigmasq_u, L_Omega));

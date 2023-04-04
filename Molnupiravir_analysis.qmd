@@ -19,6 +19,8 @@ library(tidyverse)
 library(kableExtra)
 library(finalfit)
 library(RColorBrewer)
+library(survival)
+library(survminer)
 
 ## information on software/hardware used
 version
@@ -34,9 +36,9 @@ source('functions.R')
 trt_colors = get_trt_colors()
 ```
 
-## *Load data*
+## Load data
 
-*Set up analysis*
+Set up analysis
 
 ```{r load_data}
 intervention = 'Paxlovid_Molnupiravir' # prefix of analysis file
@@ -52,7 +54,7 @@ study_threshold = 0.9
 itt_population_all = read.csv('ITT_population.csv')
 table(itt_population_all$Treatment)
 
-f_name = paste0(intervention,'_analysis.csv')
+f_name = paste0('Analysis_Data/',intervention,'_analysis.csv')
 platcov_dat = read.csv(f_name)
 platcov_dat$Rand_date = as.POSIXct(platcov_dat$Rand_date)
 trt_intervention = unique(platcov_dat$Trt)
@@ -64,12 +66,13 @@ for(tt in unique(trt_intervention)){
   print(itt_population_all$ID[itt_population_all$Treatment==tt &
                           !itt_population_all$ID %in% platcov_dat$ID])
 }
+# PLT-TH1-450 (nirmatrelvir) withdrew from study
 # interventions
 if(length(trt_intervention)==0) stop('no interventions!')
 trts = trt_intervention[trt_intervention!=ref_arm] # get interventions
 ```
 
-## *Make modified intention to treat population*
+## Make modified intention to treat population
 
 ```{r make_analysis_data}
 #| echo: false
@@ -80,9 +83,12 @@ platcov_dat = platcov_dat %>% group_by(ID) %>%
 
 pop_table = platcov_dat %>% distinct(ID, .keep_all = T)
 table(Intervention=pop_table$Trt, `mITT population` = pop_table$mITT)
+
+# PLT-TH1-388 left after randomisation (no study drug)
+# PLT-TH1-450 left after first set of swabs
 ```
 
-## *Baseline characteristics*
+## Baseline characteristics
 
 ```{r}
 #| echo: false
@@ -126,7 +132,9 @@ tab.ff
 # save_kable(tab.ff,file = 'Baseline_characteristics.png')
 ```
 
-## *Fit models*
+## Model fits
+
+### Construct data sets for model fitting
 
 ```{r}
 #| echo: false
@@ -168,8 +176,8 @@ stan_inputs =
 all_mods = list.files('Stan_models',full.names = TRUE,pattern = '*stan')
 
 model_settings = expand.grid(mod = all_mods[2:3],
-                             prior = 1,
-                             cov_matrices = 1)
+                             prior = 1:2,
+                             cov_matrices = 1:2)
 
 model_settings$Niter = 2000
 model_settings$Nwarmup = 1000
@@ -191,6 +199,8 @@ save(model_settings,
      file = model_setup_f_name)
 ```
 
+### Run models
+
 ```{r}
 if(RUN_MODELS){
   system(paste('Rscript --vanilla run_models_local.R',intervention))
@@ -198,22 +208,40 @@ if(RUN_MODELS){
 ```
 
 ```{r}
-ff = list.files('Rout/', pattern = intervention)
+ff = list.files('Rout/', pattern = paste0(intervention,'.RData'))
 ff = ff[grep(pattern = 'model_fits_',x = ff)]
 if(!length(ff)==nrow(model_settings)) stop('not all outputs are ready for all model settings')
 ff = paste0('Rout/',ff)
 ```
 
-*main model selection*
+main model selection
 
 ```{r}
 main_mod = which(model_settings$prior==1&
                    model_settings$cov_matrices==1&
                    model_settings$mod==all_mods[2])
 
+main_mod_NL = which(model_settings$prior==1&
+                   model_settings$cov_matrices==1&
+                   model_settings$mod==all_mods[3])
+
 model_cols = brewer.pal(n = 8, name = 'Dark2')[1:nrow(model_settings)]
 names(model_cols) = paste('model', 1:nrow(model_settings))
 ```
+
+## Check convergence
+
+```{r traceplots}
+ load(ff[1])
+ traceplot(out)
+ 
+ load(ff[2])
+ traceplot(out)
+```
+
+# Results
+
+## Get effects
 
 ```{r get_effects}
 effect_ests=list()
@@ -228,42 +256,78 @@ for(i in 1:length(ff)){
 ```{r Figure_main, fig.height=6, fig.width=9}
 par(las=1, mar=c(5,5,2,2),cex.lab=1.3, cex.axis=1.3, mfrow=c(1,2))
 plot_serial_data(xx = platcov_dat_analysis,xlims = c(0,7))
+mtext(text = 'a',side = 3,line = 1.5,adj = 0,cex = 1.5)
 
 par(las=1, mar=c(5,8,2,2))
 plot_effect_estimates(effect_ests = effect_ests,
                       plot_models = 1:length(ff),
                       study_threshold = study_threshold,
                       mod_cols = model_cols[1:length(ff)],
-                      my_pch = 15:16)
+                      my_pch = 15)
 # title(intervention)
 legend('right',pch=15:16,legend = c('Linear','Non-linear'),
        col = model_cols,inset=0.03, cex=1.5)
+mtext(text = 'b',side = 3,line = 1.5,adj = 0,cex = 1.5)
 
 for(i in 1:length(ff)){
   load(ff[i])
   writeLines(sprintf('For model setting %s', i))
   trt_estimates = rstan::extract(out, pars = 'trt_effect')$trt_effect
-  for(j in 1:ncol(trt_estimates)){
-    print(round(100*(exp(quantile(trt_estimates[,j], probs = my_probs))-1)))
-    print(mean(trt_estimates[,j]>log(study_threshold)))
-    print(mean(trt_estimates[,j]<log(study_threshold)))
-  }
+  writeLines(sprintf('Molnupiravir relative to Nirmatrelvir+Ritonavir:'))
+  print(round(100*(exp(quantile(trt_estimates[,1], probs = my_probs))-1)))
+  
+  writeLines(sprintf('Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:'))
+  print(mean(trt_estimates[,1] < log(.9)))
+  
+  
+  writeLines(sprintf('No Study Drug relative to Nirmatrelvir+Ritonavir:'))
+  print(round(100*(exp(quantile(trt_estimates[,2], probs = my_probs))-1)))
+  
+  writeLines(sprintf('Molnupiravir relative to No Study Drug:'))
+  print(round(100*(exp(quantile(trt_estimates[,1]-trt_estimates[,2], probs = my_probs))-1)))
+  
+  writeLines(sprintf('Nirmatrelvir+Ritonavir relative to No Study Drug:'))
+  print(round(100*(exp(quantile(-trt_estimates[,2], probs = my_probs))-1)))
+  
 }
 ```
 
 ```{r slopes_plot}
 load(ff[main_mod])
 par(las=1, cex.lab=1.5, cex.axis=1.5)
-xx=make_slopes_plot(stan_out = out, 
+xx1=make_slopes_plot(stan_out = out, 
                     analysis_data_stan = stan_inputs$analysis_data_stan,
                     ID_map = stan_inputs$ID_map,
                     data_summary = Baseline_data,
                     my_lims = c(2,50),
                     my_vals = c(5,15,25,35,45))
+
+load(ff[main_mod_NL])
+par(las=1, cex.lab=1.5, cex.axis=1.5)
+xx2=make_slopes_plot(stan_out = out, 
+                    analysis_data_stan = stan_inputs$analysis_data_stan,
+                    ID_map = stan_inputs$ID_map,
+                    data_summary = Baseline_data,
+                    my_lims = c(2,50),
+                    my_vals = c(5,15,25,35,45))
+
+par(mar=c(5,5,3,2))
+plot(xx1$t_12_med, xx2$t_12_med, xlim = c(0,30), ylim = c(0,30),
+     panel.first=grid(), pch=16,col=xx1$trt_color,
+     xlab = 'Half-life under linear model (hours)',
+     ylab = 'Half-life under non-linear model (hours)')
+lines(0:40, 0:40, lty=2)
+for(i in 1:nrow(xx1)){
+  lines(rep(xx1$t_12_med[i],2), c(xx2$t_12_low[i], xx2$t_12_up[i]), 
+        col=adjustcolor('grey',.5))
+    lines(c(xx1$t_12_low[i], xx1$t_12_up[i]), rep(xx2$t_12_med[i], 2),
+          col=adjustcolor('grey',.5))
+}
+points(xx1$t_12_med, xx2$t_12_med, pch=16,col=xx1$trt_color)
 ```
 
 ```{r coef_plot}
-coef_to_plot=1
+coef_to_plot=2
 coef_model = which(model_settings$prior==1&
                      model_settings$cov_matrices==coef_to_plot&
                      model_settings$mod==all_mods[2])
@@ -275,23 +339,24 @@ plot_coef_effects(stan_out = out,cov_mat = coef_to_plot,stan_inputs = stan_input
 ## Rebound
 
 ```{r rebound_visual_assessment}
-platcov_dat_daily = platcov_dat %>% ungroup() %>%
-  distinct(ID, Timepoint_ID, .keep_all = T)
-ind = which(platcov_dat_daily$Time>=7 & platcov_dat_daily$daily_VL>3)
-IDs_pos_late = unique(platcov_dat_daily$ID[ind])
-platcov_dat_rebound = platcov_dat_daily %>% filter(ID %in% IDs_pos_late)
+IDs_analysis = unique(platcov_dat_analysis$ID)
+platcov_dat_rebound = platcov_dat%>% filter(ID %in% IDs_analysis)
+platcov_dat_rebound = find_rebounds(platcov_dat = platcov_dat_rebound,
+                            lower_bound = 2, 
+                            upper_bound = 3,
+                            t_window = 1.5)
 
-seq_data = platcov_dat %>% filter(Timepoint_ID>=7, CT_NS<=32, ID %in% IDs_pos_late)
-write_csv(x = seq_data[, c('ID','Swab_ID','CT_NS', 'Timepoint_ID')],file = 'samples_for_sequencing.csv')
+print(unique(platcov_dat_rebound$ID[platcov_dat_rebound$rebound==1]))
 par(mfrow=c(3,1), las=1, cex.lab=1.3, cex.axis=1.3)
+platcov_dat_rebound = platcov_dat_rebound %>% filter(rebound==1)
 for(tt in unique(platcov_dat_rebound$Trt)){
   xx = platcov_dat_rebound %>% filter(Trt==tt)
   plot(xx$Time, xx$daily_VL, panel.first=grid(),
-       xlab='Time since randomization (days)', ylab = 'RNA copies per mL',
+       xlab='Time since randomization (days)', ylab = 'SARS CoV2 genomes/mL',
        ylim = range(platcov_dat$daily_VL), xlim=c(0,15),
        col = xx$trt_color)
   title(paste0(tt,' (n=',length(unique(xx$ID)),'/',
-               length(unique(platcov_dat$ID[platcov_dat$Trt==tt])),')'))
+               length(unique(platcov_dat_analysis$ID[platcov_dat_analysis$Trt==tt])),')'))
   for(id in unique(xx$ID)){
     xx_id = xx%>%filter(ID==id)
     lines(xx_id$Time, xx_id$daily_VL, col = adjustcolor(xx_id$trt_color,alpha.f = .6))
@@ -299,20 +364,109 @@ for(tt in unique(platcov_dat_rebound$Trt)){
 }
 ```
 
-## *Individual patient data*
+## Residual error
+
+```{r residuals}
+my_titles = c('Nirmatrelvir','Molnupiravir','No study drug')
+par(las=1, family='serif')
+
+res_list = list()
+for(mods in 1:2){
+  load(ff[mods])
+  individ_preds = rstan::extract(out, pars = 'pred_log10_vl')$pred_log10_vl
+  dim(individ_preds)
+  individ_preds[individ_preds<0.55]=0.55
+  trt_mat = stan_inputs$Trt_matrix
+  trt_mat[,1] = ifelse(rowSums(trt_mat)==1,0,1)
+  
+  xx = data.frame(true = stan_inputs$analysis_data_stan$log_10_vl,
+                  predicted = colMeans(individ_preds),
+                  time = stan_inputs$analysis_data_stan$obs_day,
+                  id = stan_inputs$analysis_data_stan$id,
+                  cens = as.numeric(stan_inputs$analysis_data_stan$log10_cens_vl==stan_inputs$analysis_data_stan$log_10_vl))
+  res_list[[mods]] = xx
+  xx$day = floor(xx$time)
+  xx$residual = xx$true-xx$predicted
+  par(mfrow=c(1,1))
+  plot(xx$true, xx$predicted,xlab='observed',ylab='predicted',
+       panel.first=grid(), xlim = c(1,8.5), ylim=c(1,8.5))
+  title(model_settings$mod[mods])
+  lines(0:20, 0:20, lwd=3, col='red')
+  
+  par(mfcol=c(2,3),las=1)
+  for(j in 1:ncol(stan_inputs$Trt_matrix)){
+    ind = which(trt_mat[,j]==1)
+    boxplot(residual ~ day,data = xx[ind, ],
+            xlab='Day', ylab='Residual error (observed - predicted)',
+            ylim=c(-2.5, 2.5))
+    grid()
+    title(my_titles[j])
+    abline(h=0,lwd=2)
+    
+    summary_xx = xx[ind,]%>% group_by(day) %>%
+      arrange(time) %>%
+      mutate(true = median(true),
+             predicted = median(predicted))%>%ungroup()%>%
+      distinct(day, .keep_all=T)
+    plot(summary_xx$day, summary_xx$true, type='b',lwd=2, col='blue',
+         ylim = c(1, 6),panel.first=grid(),
+         xlab='Day', ylab='Log10 viral load')
+    lines(summary_xx$day, summary_xx$predicted, lty=2,lwd=2, col='red')
+    legend('topright', inset = 0.03, legend = c('model','observed'),title = 'median',lwd=2, col=c('red','blue'))
+  }
+}
+linear_mod_residuals = res_list[[1]] %>% group_by(id) %>%
+  mutate(n_cens = sum(cens),
+         mse = sum((true[cens==0]-predicted[cens==0])^2)/sum(cens==0),
+         slope = coef(lm(predicted~time))['time']) %>%
+  distinct(id, .keep_all = T) %>% filter(n_cens<2)
+hist(linear_mod_residuals$mse)
+plot(linear_mod_residuals$slope, linear_mod_residuals$mse)
+```
+
+## Individual patient data
+
+```{r individual_curves}
+model_list = list()
+for(i in 1:2){
+  load(ff[i])
+  model_list[[i]] = out
+}
+
+ID_map = merge(stan_inputs$ID_map, Baseline_data,
+               by.x = 'ID_key',by.y = 'ID')
+ID_map = merge(ID_map,xx1[, c('ID', 't_12_med')], 
+               by.x = 'ID_key',by.y = 'ID')
+ID_map = ID_map %>% arrange(Trt, t_12_med)
+
+par(mfrow=c(3,3), par=c(2,2,1,2),las=1)
+plot_data_model_fits(model_list = model_list, 
+                     models_to_plot = 1:2,
+                     K_plots = 16, 
+                     mod_cols = model_cols[1:2],
+                     ID_map = ID_map,analysis_data_stan = stan_inputs$analysis_data_stan)
+par(mfrow=c(1,3), mar=c(3,3,2,2),las=1, cex.lab=1.5, cex.axis=1.5)
+plot_individ_curves(platcov_dat = platcov_dat, 
+                    IDs = c('PLT-TH1-612', 'PLT-TH1-578', 'PLT-TH1-490'),
+                    xlims = c(0,15))
+```
+
+## Fever clearance
 
 ```{r}
-# model_list = list()
-# for(i in 1:length(ff)){
-#   load(ff[i])
-#   model_list[[i]] = out
-# }
-# 
-# ID_map = merge(stan_inputs$ID_map, Baseline_data, by.x = 'ID_key',by.y = 'ID')
-# par(mfrow=c(4,4), mar=c(2,2,2,2),las=1)
-# plot_data_model_fits(model_list = model_list, 
-#                      models_to_plot = 1:2,
-#                      K_plots = 16,mod_cols = model_cols,
-#                      ID_map = ID_map,
-#                      analysis_data_stan = stan_inputs$analysis_data_stan)
+platcov_temp = read_csv(file = 'Analysis_Data/Paxlovid_Molnupiravir_meta_fever.csv')
+
+platcov_temp = platcov_temp %>% filter(ID %in% platcov_dat_analysis$ID) %>%
+  ungroup() %>%
+  arrange(ID, Time) %>% 
+  group_by(ID) %>%
+  mutate(include_analysis = any(Time>=2)) %>%
+  ungroup() %>% filter(include_analysis, Fever_Baseline==1)
+
+length(unique(platcov_temp$ID))
+temp_clearance = calculate_fever_clearance(temp_dat = platcov_temp,
+                                           window_clear = 48/24)
+temp_clearance = merge(temp_clearance, platcov_dat_analysis[!duplicated(platcov_dat_analysis$ID),], by = 'ID')
+fit <- survfit(Surv(clearance_time, clearance_time_cens) ~ Trt, data = temp_clearance) 
+ggsurvplot(fit = fit, data = temp_clearance)
 ```

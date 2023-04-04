@@ -171,7 +171,18 @@ Attaching package: 'kableExtra'
 
 The following object is masked from 'package:dplyr':
 
-    group_rows</code></pre>
+    group_rows
+
+
+Loading required package: ggpubr
+
+
+Attaching package: 'survminer'
+
+
+The following object is masked from 'package:survival':
+
+    myeloma</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               _                           
@@ -193,7 +204,7 @@ nickname       Innocent and Trusting       </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.1
+Running under: macOS Ventura 13.2.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
@@ -206,40 +217,44 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
- [4] forcats_0.5.2        stringr_1.5.0        dplyr_1.0.10        
- [7] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
-[10] tibble_3.1.8         tidyverse_1.3.2      rstan_2.21.7        
-[13] ggplot2_3.4.0        StanHeaders_2.21.0-7
+ [1] survminer_0.4.9      ggpubr_0.5.0         survival_3.4-0      
+ [4] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
+ [7] forcats_0.5.2        stringr_1.5.0        dplyr_1.0.10        
+[10] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
+[13] tibble_3.1.8         tidyverse_1.3.2      rstan_2.21.7        
+[16] ggplot2_3.4.0        StanHeaders_2.21.0-7
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.4          splines_4.2.2       viridisLite_0.4.1  
- [4] jsonlite_1.8.4      modelr_0.1.10       RcppParallel_5.1.5 
- [7] assertthat_0.2.1    stats4_4.2.2        googlesheets4_1.0.1
-[10] cellranger_1.1.0    yaml_2.3.6          lattice_0.20-45    
-[13] pillar_1.8.1        backports_1.4.1     glue_1.6.2         
-[16] digest_0.6.31       rvest_1.0.3         colorspace_2.0-3   
-[19] Matrix_1.5-1        htmltools_0.5.4     pkgconfig_2.0.3    
-[22] broom_1.0.2         haven_2.5.1         webshot_0.5.4      
-[25] scales_1.2.1        processx_3.8.0      svglite_2.1.1      
-[28] tzdb_0.3.0          timechange_0.1.1    googledrive_2.0.0  
-[31] generics_0.1.3      ellipsis_0.3.2      withr_2.5.0        
-[34] cli_3.4.1           survival_3.4-0      magrittr_2.0.3     
-[37] crayon_1.5.2        readxl_1.4.1        evaluate_0.19      
-[40] ps_1.7.2            mice_3.15.0         fs_1.5.2           
-[43] fansi_1.0.3         xml2_1.3.3          pkgbuild_1.4.0     
-[46] tools_4.2.2         loo_2.5.1           prettyunits_1.1.1  
-[49] hms_1.1.2           gargle_1.2.1        lifecycle_1.0.3    
-[52] matrixStats_0.63.0  munsell_0.5.0       reprex_2.0.2       
-[55] callr_3.7.3         compiler_4.2.2      systemfonts_1.0.4  
-[58] rlang_1.0.6         grid_4.2.2          rstudioapi_0.14    
-[61] htmlwidgets_1.6.0   rmarkdown_2.19      boot_1.3-28        
-[64] gtable_0.3.1        codetools_0.2-18    inline_0.3.19      
-[67] DBI_1.1.3           R6_2.5.1            gridExtra_2.3      
-[70] lubridate_1.9.0     knitr_1.41          fastmap_1.1.0      
-[73] utf8_1.2.2          stringi_1.7.8       parallel_4.2.2     
-[76] Rcpp_1.0.9          vctrs_0.5.1         dbplyr_2.2.1       
-[79] tidyselect_1.2.0    xfun_0.35          </code></pre>
+ [1] matrixStats_0.63.0  fs_1.5.2            lubridate_1.9.0    
+ [4] webshot_0.5.4       httr_1.4.4          tools_4.2.2        
+ [7] backports_1.4.1     utf8_1.2.2          R6_2.5.1           
+[10] DBI_1.1.3           colorspace_2.0-3    withr_2.5.0        
+[13] tidyselect_1.2.0    gridExtra_2.3       prettyunits_1.1.1  
+[16] processx_3.8.0      compiler_4.2.2      cli_3.4.1          
+[19] rvest_1.0.3         mice_3.15.0         xml2_1.3.3         
+[22] scales_1.2.1        survMisc_0.5.6      callr_3.7.3        
+[25] systemfonts_1.0.4   digest_0.6.31       rmarkdown_2.19     
+[28] svglite_2.1.1       pkgconfig_2.0.3     htmltools_0.5.4    
+[31] dbplyr_2.2.1        fastmap_1.1.0       htmlwidgets_1.6.0  
+[34] rlang_1.0.6         readxl_1.4.1        rstudioapi_0.14    
+[37] generics_0.1.3      zoo_1.8-11          jsonlite_1.8.4     
+[40] car_3.1-1           googlesheets4_1.0.1 inline_0.3.19      
+[43] magrittr_2.0.3      loo_2.5.1           Matrix_1.5-1       
+[46] Rcpp_1.0.9          munsell_0.5.0       fansi_1.0.3        
+[49] abind_1.4-5         lifecycle_1.0.3     stringi_1.7.8      
+[52] yaml_2.3.6          carData_3.0-5       pkgbuild_1.4.0     
+[55] grid_4.2.2          parallel_4.2.2      crayon_1.5.2       
+[58] lattice_0.20-45     haven_2.5.1         splines_4.2.2      
+[61] hms_1.1.2           knitr_1.41          ps_1.7.2           
+[64] pillar_1.8.1        boot_1.3-28         ggsignif_0.6.4     
+[67] codetools_0.2-18    stats4_4.2.2        reprex_2.0.2       
+[70] glue_1.6.2          evaluate_0.19       data.table_1.14.6  
+[73] RcppParallel_5.1.5  modelr_0.1.10       vctrs_0.5.1        
+[76] tzdb_0.3.0          cellranger_1.1.0    gtable_0.3.1       
+[79] km.ci_0.5-6         assertthat_0.2.1    xfun_0.35          
+[82] xtable_1.8-4        broom_1.0.2         rstatix_0.7.1      
+[85] googledrive_2.0.0   viridisLite_0.4.1   gargle_1.2.1       
+[88] KMsurv_0.1-5        timechange_0.1.1    ellipsis_0.3.2     </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in checkStrict(plot_serial_data): global variables used: daily_VL, ID,
@@ -251,8 +266,8 @@ Time</code></pre>
 </div>
 </div>
 <section id="load-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-data"><em>Load data</em></h2>
-<p><em>Set up analysis</em></p>
+<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
+<p>Set up analysis</p>
 <div class="cell">
 
 </div>
@@ -262,38 +277,37 @@ Time</code></pre>
                 Evusheld              Favipiravir               Fluoxetine 
                       35                       40                       64 
             Molnupiravir Nirmatrelvir + Ritonavir            No study drug 
-                      64                       59                       84 
+                      65                       59                       85 
                Regeneron 
                       35 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Missing patients in Molnupiravir arm:
-[1] "PLT-TH1-634" "PLT-TH1-638" "PLT-TH1-639" "PLT-TH1-640" "PLT-TH1-648"
-[6] "PLT-TH1-651"
+[1] "PLT-TH1-655"
 Missing patients in Nirmatrelvir + Ritonavir arm:
-[1] "PLT-TH1-450" "PLT-TH1-636" "PLT-TH1-647" "PLT-TH1-653"
+[1] "PLT-TH1-450"
 Missing patients in No study drug arm:
-[1] "PLT-TH1-635" "PLT-TH1-637" "PLT-TH1-643" "PLT-TH1-644"</code></pre>
+character(0)</code></pre>
 </div>
 </div>
 </section>
 <section id="make-modified-intention-to-treat-population" class="level2">
-<h2 class="anchored" data-anchor-id="make-modified-intention-to-treat-population"><em>Make modified intention to treat population</em></h2>
+<h2 class="anchored" data-anchor-id="make-modified-intention-to-treat-population">Make modified intention to treat population</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>                          mITT population
 Intervention               FALSE TRUE
-  Molnupiravir                 0   58
-  Nirmatrelvir + Ritonavir     0   55
-  No study drug                1   79</code></pre>
+  Molnupiravir                 0   64
+  Nirmatrelvir + Ritonavir     0   58
+  No study drug                1   84</code></pre>
 </div>
 </div>
 </section>
 <section id="baseline-characteristics" class="level2">
-<h2 class="anchored" data-anchor-id="baseline-characteristics"><em>Baseline characteristics</em></h2>
+<h2 class="anchored" data-anchor-id="baseline-characteristics">Baseline characteristics</h2>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>The following `from` values were not present in `x`: Ivermectin, Regeneron, Remdesivir, Favipiravir, Nitazoxanide, Fluoxetine, Evusheld</code></pre>
+<pre><code>The following `from` values were not present in `x`: Ivermectin, Regeneron, Remdesivir, Favipiravir, Nitazoxanide, Fluoxetine, Evusheld, Ensitrelvir</code></pre>
 </div>
 <div class="cell-output-display">
 
@@ -312,83 +326,83 @@ Intervention               FALSE TRUE
 <tbody>
   <tr>
    <td style="text-align:left;"> Site </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> th001 </td>
-   <td style="text-align:right;"> 55 (100.0) </td>
    <td style="text-align:right;"> 58 (100.0) </td>
-   <td style="text-align:right;"> 79 (100.0) </td>
+   <td style="text-align:right;"> 64 (100.0) </td>
+   <td style="text-align:right;"> 84 (100.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Age </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> Mean (SD) </td>
-   <td style="text-align:right;"> 30.7 (7.2) </td>
-   <td style="text-align:right;"> 31.1 (7.4) </td>
-   <td style="text-align:right;"> 30.8 (8.3) </td>
+   <td style="text-align:right;"> 30.5 (7.2) </td>
+   <td style="text-align:right;"> 31.4 (7.5) </td>
+   <td style="text-align:right;"> 30.7 (8.2) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> BMI </td>
-   <td style="text-align:right;"> 188 (97.9) </td>
+   <td style="text-align:right;"> 199 (96.6) </td>
    <td style="text-align:left;"> Mean (SD) </td>
-   <td style="text-align:right;"> 22.9 (3.1) </td>
-   <td style="text-align:right;"> 23.1 (3.8) </td>
-   <td style="text-align:right;"> 22.9 (3.6) </td>
+   <td style="text-align:right;"> 22.8 (3.0) </td>
+   <td style="text-align:right;"> 23.0 (3.9) </td>
+   <td style="text-align:right;"> 23.0 (3.8) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Weight </td>
-   <td style="text-align:right;"> 188 (97.9) </td>
+   <td style="text-align:right;"> 199 (96.6) </td>
    <td style="text-align:left;"> Mean (SD) </td>
-   <td style="text-align:right;"> 63.5 (11.5) </td>
-   <td style="text-align:right;"> 63.6 (14.7) </td>
-   <td style="text-align:right;"> 61.8 (12.9) </td>
+   <td style="text-align:right;"> 63.2 (11.4) </td>
+   <td style="text-align:right;"> 63.4 (14.8) </td>
+   <td style="text-align:right;"> 61.9 (12.9) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Baseline.viral.load </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> Mean (SD) </td>
-   <td style="text-align:right;"> 5.5 (1.0) </td>
+   <td style="text-align:right;"> 5.4 (1.0) </td>
    <td style="text-align:right;"> 5.6 (1.2) </td>
-   <td style="text-align:right;"> 5.4 (1.3) </td>
+   <td style="text-align:right;"> 5.4 (1.4) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Sex </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> Male </td>
-   <td style="text-align:right;"> 22 (40.0) </td>
-   <td style="text-align:right;"> 26 (44.8) </td>
-   <td style="text-align:right;"> 27 (34.2) </td>
+   <td style="text-align:right;"> 23 (39.7) </td>
+   <td style="text-align:right;"> 28 (43.8) </td>
+   <td style="text-align:right;"> 27 (32.1) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:left;"> Female </td>
-   <td style="text-align:right;"> 33 (60.0) </td>
-   <td style="text-align:right;"> 32 (55.2) </td>
-   <td style="text-align:right;"> 52 (65.8) </td>
+   <td style="text-align:right;"> 35 (60.3) </td>
+   <td style="text-align:right;"> 36 (56.2) </td>
+   <td style="text-align:right;"> 57 (67.9) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Variant </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> BA.2 </td>
-   <td style="text-align:right;"> 23 (41.8) </td>
-   <td style="text-align:right;"> 26 (44.8) </td>
-   <td style="text-align:right;"> 33 (41.8) </td>
+   <td style="text-align:right;"> 28 (48.3) </td>
+   <td style="text-align:right;"> 32 (50.0) </td>
+   <td style="text-align:right;"> 39 (46.4) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:left;"> BA.5 </td>
-   <td style="text-align:right;"> 29 (52.7) </td>
-   <td style="text-align:right;"> 30 (51.7) </td>
-   <td style="text-align:right;"> 43 (54.4) </td>
+   <td style="text-align:right;"> 27 (46.6) </td>
+   <td style="text-align:right;"> 30 (46.9) </td>
+   <td style="text-align:right;"> 42 (50.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:left;"> BA.4 </td>
-   <td style="text-align:right;"> 3 (5.5) </td>
-   <td style="text-align:right;"> 2 (3.4) </td>
-   <td style="text-align:right;"> 2 (2.5) </td>
+   <td style="text-align:right;"> 3 (5.2) </td>
+   <td style="text-align:right;"> 2 (3.1) </td>
+   <td style="text-align:right;"> 2 (2.4) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
@@ -396,11 +410,11 @@ Intervention               FALSE TRUE
    <td style="text-align:left;"> BA.3 </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
-   <td style="text-align:right;"> 1 (1.3) </td>
+   <td style="text-align:right;"> 1 (1.2) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Symptom_onset </td>
-   <td style="text-align:right;"> 189 (98.4) </td>
+   <td style="text-align:right;"> 200 (97.1) </td>
    <td style="text-align:left;"> Mean (SD) </td>
    <td style="text-align:right;"> 2.0 (0.7) </td>
    <td style="text-align:right;"> 2.1 (0.6) </td>
@@ -408,19 +422,19 @@ Intervention               FALSE TRUE
   </tr>
   <tr>
    <td style="text-align:left;"> Vaccinated </td>
-   <td style="text-align:right;"> 192 (100.0) </td>
+   <td style="text-align:right;"> 206 (100.0) </td>
    <td style="text-align:left;"> Yes </td>
-   <td style="text-align:right;"> 54 (98.2) </td>
-   <td style="text-align:right;"> 54 (93.1) </td>
-   <td style="text-align:right;"> 74 (93.7) </td>
+   <td style="text-align:right;"> 56 (96.6) </td>
+   <td style="text-align:right;"> 60 (93.8) </td>
+   <td style="text-align:right;"> 80 (95.2) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 1 (1.8) </td>
-   <td style="text-align:right;"> 4 (6.9) </td>
-   <td style="text-align:right;"> 5 (6.3) </td>
+   <td style="text-align:right;"> 2 (3.4) </td>
+   <td style="text-align:right;"> 4 (6.2) </td>
+   <td style="text-align:right;"> 4 (4.8) </td>
   </tr>
 </tbody>
 </table>
@@ -428,15 +442,17 @@ Intervention               FALSE TRUE
 </div>
 </div>
 </section>
-<section id="fit-models" class="level2">
-<h2 class="anchored" data-anchor-id="fit-models"><em>Fit models</em></h2>
+<section id="model-fits" class="level2">
+<h2 class="anchored" data-anchor-id="model-fits">Model fits</h2>
+<section id="construct-data-sets-for-model-fitting" class="level3">
+<h3 class="anchored" data-anchor-id="construct-data-sets-for-model-fitting">Construct data sets for model fitting</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Analysis dataset contains 192 patients and 3442 datapoints (2771 above LLOD, 81%)</code></pre>
+<pre><code>Analysis dataset contains 206 patients and 3688 datapoints (2966 above LLOD, 80%)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>There are a total of 192 patients in the database with a total of 3442 PCRs analysable
-19.49% of samples are below LOD
+<pre><code>There are a total of 206 patients in the database with a total of 3688 PCRs analysable
+19.58% of samples are below LOD
 check stan data formatting:</code></pre>
 </div>
 </div>
@@ -445,16 +461,50 @@ check stan data formatting:</code></pre>
 <pre><code>We are running all models with 4 chains and 2000 samples for each chain, discarding 1000 for burn-in and thining every 4, thus giving a total of 1000 posterior samples per model.</code></pre>
 </div>
 </div>
+</section>
+<section id="run-models" class="level3">
+<h3 class="anchored" data-anchor-id="run-models">Run models</h3>
 <div class="cell">
 
 </div>
 <div class="cell">
 
 </div>
-<p><em>main model selection</em></p>
+<p>main model selection</p>
 <div class="cell">
 
 </div>
+</section>
+</section>
+<section id="check-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="check-convergence">Check convergence</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/traceplots-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/traceplots-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="get-effects" class="level2">
+<h2 class="anchored" data-anchor-id="get-effects">Get effects</h2>
 <div class="cell">
 
 </div>
@@ -472,23 +522,35 @@ check stan data formatting:</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>For model setting 1
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -36   -32   -23   -13    -7 
-[1] 0.056
-[1] 0.944
+  -37   -34   -26   -16   -10 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.975
+No Study Drug relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -55   -52   -46   -39   -35 
-[1] 0
-[1] 1
+  -56   -52   -46   -40   -36 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   16    25    39    57    68 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   57    67    87   110   125 
 For model setting 2
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -34   -31   -22   -13    -9 
-[1] 0.043
-[1] 0.957
+  -36   -32   -25   -16   -11 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.984
+No Study Drug relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
   -49   -46   -40   -33   -29 
-[1] 0
-[1] 1</code></pre>
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+    7    13    25    39    48 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   41    49    67    85    96 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -500,9 +562,9 @@ For model setting 2
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.5 (range 3.6 to 21.2)
-In Molnupiravir the median clearance half life was 11.1 (range 4.3 to 24.6)
-In No study drug the median clearance half life was 15.6 (range 3.8 to 39.3)</code></pre>
+<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.4 (range 3.6 to 21.3)
+In Molnupiravir the median clearance half life was 11.5 (range 4.2 to 24.9)
+In No study drug the median clearance half life was 15.4 (range 3.8 to 40.5)</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -522,6 +584,21 @@ The following `from` values were not present in `x`: Age_scaled, Antibody_test, 
 <section id="rebound" class="level2">
 <h2 class="anchored" data-anchor-id="rebound">Rebound</h2>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>patient PLT-TH1-280 treated with No study drug had a rebound identified on day 6
+patient PLT-TH1-415 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 6
+patient PLT-TH1-415 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 7
+patient PLT-TH1-465 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-481 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 5
+patient PLT-TH1-511 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-543 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-548 treated with Molnupiravir had a rebound identified on day 10
+patient PLT-TH1-630 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 10</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PLT-TH1-280" "PLT-TH1-415" "PLT-TH1-465" "PLT-TH1-481" "PLT-TH1-511"
+[6] "PLT-TH1-543" "PLT-TH1-548" "PLT-TH1-630"</code></pre>
+</div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -531,11 +608,67 @@ The following `from` values were not present in `x`: Age_scaled, Antibody_test, 
 </div>
 </div>
 </section>
+<section id="residual-error" class="level2">
+<h2 class="anchored" data-anchor-id="residual-error">Residual error</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-3.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-4.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="individual-patient-data" class="level2">
-<h2 class="anchored" data-anchor-id="individual-patient-data"><em>Individual patient data</em></h2>
+<h2 class="anchored" data-anchor-id="individual-patient-data">Individual patient data</h2>
 <div class="cell">
 
 </div>
+</section>
+<section id="fever-clearance" class="level2">
+<h2 class="anchored" data-anchor-id="fever-clearance">Fever clearance</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 12336 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): ID
+dbl (3): Timepoint_ID, Time, temperature_ax
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 
 </main>

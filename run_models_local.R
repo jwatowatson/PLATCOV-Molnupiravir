@@ -12,7 +12,7 @@ load(paste0('Rout/model_run_setup_',args[1],'.RData'))
 writeLines(sprintf('Doing analysis for %s......', args[1]))
 
 for(i in 1:nrow(model_settings)){
-  
+
   writeLines('Doing the following job:')
   print(model_settings[i, ])
   

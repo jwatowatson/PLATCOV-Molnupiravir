@@ -193,7 +193,7 @@ nickname       Innocent and Trusting       </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.1
+Running under: macOS Ventura 13.2.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
@@ -265,23 +265,21 @@ Missing patients in Remdesivir arm:
  [6] "PLT-BR3-012"  "PLT-BR3-013"  "PLT-BR3-016"  "PLT-BR3-019"  "PLT-BR3-022" 
 [11] "PLT-BR3-026"  "PLT-BR3-027"  "PLT-BR3-035" 
 Missing patients in No study drug arm:
- [1] "PLT-TH1-056"  "PLT-TH1-635"  "PLT-TH1-637"  "PLT-TH1-643"  "PLT-TH1-644" 
- [6] "PLT-TH1-654"  "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
-[11] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
-[16] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
-[21] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
-[26] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
-[31] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090" 
+ [1] "PLT-TH1-056"  "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
+ [6] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
+[11] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
+[16] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
+[21] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
+[26] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090"  "PLT-BR3-092" 
 Missing patients in Favipiravir arm:
  [1] "PLT-TH57-004" "PLT-TH57-006" "PLT-BR3-001"  "PLT-BR3-005"  "PLT-BR3-007" 
  [6] "PLT-BR3-009"  "PLT-BR3-014"  "PLT-BR3-015"  "PLT-BR3-023"  "PLT-BR3-025" 
 [11] "PLT-BR3-028"  "PLT-BR3-029"  "PLT-BR3-036"  "PLT-BR3-037"  "PLT-BR3-047" 
 [16] "PLT-BR3-049"  "PLT-BR3-051"  "PLT-BR3-056"  "PLT-BR3-058"  "PLT-BR3-059" 
 Missing patients in Molnupiravir arm:
-[1] "PLT-TH1-634" "PLT-TH1-638" "PLT-TH1-639" "PLT-TH1-640" "PLT-TH1-648"
-[6] "PLT-TH1-651"
+[1] "PLT-TH1-655"
 Missing patients in Nirmatrelvir + Ritonavir arm:
-[1] "PLT-TH1-450" "PLT-TH1-636" "PLT-TH1-647" "PLT-TH1-653"</code></pre>
+[1] "PLT-TH1-450"</code></pre>
 </div>
 </div>
 </section>
@@ -293,10 +291,13 @@ Missing patients in Nirmatrelvir + Ritonavir arm:
 Intervention               FALSE TRUE
   Favipiravir                  0   96
   Ivermectin                   2   40
-  Molnupiravir                 0   58
-  Nirmatrelvir + Ritonavir     0   55
-  No study drug                4  129
+  Molnupiravir                 0   64
+  Nirmatrelvir + Ritonavir     0   58
+  No study drug                4  134
   Remdesivir                   0   54</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2021-09-30 +07" "2023-02-07 +07"</code></pre>
 </div>
 </div>
 </section>
@@ -326,77 +327,77 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;"> Site </td>
    <td style="text-align:right;"> th001 </td>
-   <td style="text-align:left;"> 129 (100.0) </td>
+   <td style="text-align:left;"> 134 (100.0) </td>
    <td style="text-align:right;"> 40 (100.0) </td>
    <td style="text-align:right;"> 54 (100.0) </td>
    <td style="text-align:right;"> 96 (100.0) </td>
-   <td style="text-align:left;"> 58 (100.0) </td>
-   <td style="text-align:right;"> 55 (100.0) </td>
+   <td style="text-align:left;"> 64 (100.0) </td>
+   <td style="text-align:right;"> 58 (100.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Age </td>
    <td style="text-align:right;"> Mean (SD) </td>
-   <td style="text-align:left;"> 30.5 (7.3) </td>
+   <td style="text-align:left;"> 30.4 (7.2) </td>
    <td style="text-align:right;"> 30.5 (7.1) </td>
    <td style="text-align:right;"> 30.6 (8.4) </td>
    <td style="text-align:right;"> 29.8 (7.5) </td>
-   <td style="text-align:left;"> 31.1 (7.4) </td>
-   <td style="text-align:right;"> 30.7 (7.2) </td>
+   <td style="text-align:left;"> 31.4 (7.5) </td>
+   <td style="text-align:right;"> 30.5 (7.2) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> BMI </td>
    <td style="text-align:right;"> Mean (SD) </td>
-   <td style="text-align:left;"> 22.8 (3.4) </td>
+   <td style="text-align:left;"> 22.9 (3.5) </td>
    <td style="text-align:right;"> 22.5 (3.3) </td>
    <td style="text-align:right;"> 22.7 (2.8) </td>
    <td style="text-align:right;"> 22.8 (3.7) </td>
-   <td style="text-align:left;"> 23.1 (3.8) </td>
-   <td style="text-align:right;"> 22.9 (3.1) </td>
+   <td style="text-align:left;"> 23.0 (3.9) </td>
+   <td style="text-align:right;"> 22.8 (3.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Weight </td>
    <td style="text-align:right;"> Mean (SD) </td>
-   <td style="text-align:left;"> 62.3 (12.9) </td>
+   <td style="text-align:left;"> 62.4 (12.8) </td>
    <td style="text-align:right;"> 62.0 (12.6) </td>
    <td style="text-align:right;"> 63.7 (10.9) </td>
    <td style="text-align:right;"> 62.4 (13.8) </td>
-   <td style="text-align:left;"> 63.6 (14.7) </td>
-   <td style="text-align:right;"> 63.5 (11.5) </td>
+   <td style="text-align:left;"> 63.4 (14.8) </td>
+   <td style="text-align:right;"> 63.2 (11.4) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Baseline.viral.load </td>
    <td style="text-align:right;"> Mean (SD) </td>
-   <td style="text-align:left;"> 5.6 (1.3) </td>
+   <td style="text-align:left;"> 5.5 (1.3) </td>
    <td style="text-align:right;"> 5.7 (1.1) </td>
    <td style="text-align:right;"> 5.7 (1.1) </td>
    <td style="text-align:right;"> 5.6 (1.0) </td>
    <td style="text-align:left;"> 5.6 (1.2) </td>
-   <td style="text-align:right;"> 5.5 (1.0) </td>
+   <td style="text-align:right;"> 5.4 (1.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Sex </td>
    <td style="text-align:right;"> Male </td>
-   <td style="text-align:left;"> 50 (38.8) </td>
+   <td style="text-align:left;"> 50 (37.3) </td>
    <td style="text-align:right;"> 18 (45.0) </td>
    <td style="text-align:right;"> 27 (50.0) </td>
    <td style="text-align:right;"> 38 (39.6) </td>
-   <td style="text-align:left;"> 26 (44.8) </td>
-   <td style="text-align:right;"> 22 (40.0) </td>
+   <td style="text-align:left;"> 28 (43.8) </td>
+   <td style="text-align:right;"> 23 (39.7) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> Female </td>
-   <td style="text-align:left;"> 79 (61.2) </td>
+   <td style="text-align:left;"> 84 (62.7) </td>
    <td style="text-align:right;"> 22 (55.0) </td>
    <td style="text-align:right;"> 27 (50.0) </td>
    <td style="text-align:right;"> 58 (60.4) </td>
-   <td style="text-align:left;"> 32 (55.2) </td>
-   <td style="text-align:right;"> 33 (60.0) </td>
+   <td style="text-align:left;"> 36 (56.2) </td>
+   <td style="text-align:right;"> 35 (60.3) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Variant </td>
    <td style="text-align:right;"> Delta </td>
-   <td style="text-align:left;"> 9 (7.0) </td>
+   <td style="text-align:left;"> 9 (6.7) </td>
    <td style="text-align:right;"> 11 (27.5) </td>
    <td style="text-align:right;"> 10 (18.5) </td>
    <td style="text-align:right;"> 11 (11.5) </td>
@@ -406,7 +407,7 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.1 </td>
-   <td style="text-align:left;"> 8 (6.2) </td>
+   <td style="text-align:left;"> 8 (6.0) </td>
    <td style="text-align:right;"> 11 (27.5) </td>
    <td style="text-align:right;"> 16 (29.6) </td>
    <td style="text-align:right;"> 17 (17.7) </td>
@@ -416,37 +417,37 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.2 </td>
-   <td style="text-align:left;"> 69 (53.5) </td>
+   <td style="text-align:left;"> 72 (53.7) </td>
    <td style="text-align:right;"> 18 (45.0) </td>
    <td style="text-align:right;"> 28 (51.9) </td>
    <td style="text-align:right;"> 38 (39.6) </td>
-   <td style="text-align:left;"> 27 (46.6) </td>
-   <td style="text-align:right;"> 26 (47.3) </td>
+   <td style="text-align:left;"> 32 (50.0) </td>
+   <td style="text-align:right;"> 28 (48.3) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.4 </td>
-   <td style="text-align:left;"> 2 (1.6) </td>
+   <td style="text-align:left;"> 2 (1.5) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 3 (3.1) </td>
-   <td style="text-align:left;"> 2 (3.4) </td>
-   <td style="text-align:right;"> 3 (5.5) </td>
+   <td style="text-align:left;"> 2 (3.1) </td>
+   <td style="text-align:right;"> 3 (5.2) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.5 </td>
-   <td style="text-align:left;"> 40 (31.0) </td>
+   <td style="text-align:left;"> 42 (31.3) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 27 (28.1) </td>
-   <td style="text-align:left;"> 29 (50.0) </td>
-   <td style="text-align:right;"> 26 (47.3) </td>
+   <td style="text-align:left;"> 30 (46.9) </td>
+   <td style="text-align:right;"> 27 (46.6) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.3 </td>
-   <td style="text-align:left;"> 1 (0.8) </td>
+   <td style="text-align:left;"> 1 (0.7) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
@@ -466,22 +467,22 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;"> Vaccinated </td>
    <td style="text-align:right;"> Yes </td>
-   <td style="text-align:left;"> 124 (96.1) </td>
+   <td style="text-align:left;"> 130 (97.0) </td>
    <td style="text-align:right;"> 39 (97.5) </td>
    <td style="text-align:right;"> 51 (94.4) </td>
    <td style="text-align:right;"> 94 (97.9) </td>
-   <td style="text-align:left;"> 54 (93.1) </td>
-   <td style="text-align:right;"> 54 (98.2) </td>
+   <td style="text-align:left;"> 60 (93.8) </td>
+   <td style="text-align:right;"> 56 (96.6) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> No </td>
-   <td style="text-align:left;"> 5 (3.9) </td>
+   <td style="text-align:left;"> 4 (3.0) </td>
    <td style="text-align:right;"> 1 (2.5) </td>
    <td style="text-align:right;"> 3 (5.6) </td>
    <td style="text-align:right;"> 2 (2.1) </td>
-   <td style="text-align:left;"> 4 (6.9) </td>
-   <td style="text-align:right;"> 1 (1.8) </td>
+   <td style="text-align:left;"> 4 (6.2) </td>
+   <td style="text-align:right;"> 2 (3.4) </td>
   </tr>
 </tbody>
 </table>
@@ -493,11 +494,11 @@ Intervention               FALSE TRUE
 <h2 class="anchored" data-anchor-id="fit-models"><em>Fit models</em></h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Analysis dataset contains 432 patients and 7770 datapoints (6738 above LLOD, 87%)</code></pre>
+<pre><code>Analysis dataset contains 446 patients and 8016 datapoints (6933 above LLOD, 86%)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>There are a total of 432 patients in the database with a total of 7770 PCRs analysable
-13.28% of samples are below LOD
+<pre><code>There are a total of 446 patients in the database with a total of 8016 PCRs analysable
+13.51% of samples are below LOD
 check stan data formatting:</code></pre>
 </div>
 </div>
@@ -511,6 +512,31 @@ check stan data formatting:</code></pre>
 </div>
 <div class="cell">
 
+</div>
+</section>
+<section id="check-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="check-convergence">Check convergence</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/traceplots-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/traceplots-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
 </div>
 <p><em>main model selection</em></p>
 <div class="cell">
@@ -534,44 +560,44 @@ check stan data formatting:</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>For model setting 1
  2.5%   10%   50%   90% 97.5% 
-  -24   -19    -7     4    12 
-[1] 0.001
-[1] 0.999
+  -24   -18    -6     8    17 
+[1] 0.019
+[1] 0.981
  2.5%   10%   50%   90% 97.5% 
-    7    15    29    45    55 
-[1] 0.774
-[1] 0.226
+    6    13    28    45    56 
+[1] 0.757
+[1] 0.243
  2.5%   10%   50%   90% 97.5% 
-  -11    -7     2    11    17 
-[1] 0.005
-[1] 0.995
+  -11    -6     3    12    19 
+[1] 0.021
+[1] 0.979
  2.5%   10%   50%   90% 97.5% 
-   22    30    45    60    71 
-[1] 0.984
-[1] 0.016
+   19    26    40    56    64 
+[1] 0.973
+[1] 0.027
  2.5%   10%   50%   90% 97.5% 
-   61    72    91   112   124 
+   63    72    92   113   127 
 [1] 1
 [1] 0
 For model setting 2
  2.5%   10%   50%   90% 97.5% 
-  -25   -20   -12    -2     3 
-[1] 0
-[1] 1
+  -26   -21   -11     0     6 
+[1] 0.002
+[1] 0.998
  2.5%   10%   50%   90% 97.5% 
-    4     9    20    32    39 
-[1] 0.509
-[1] 0.491
+    2     8    19    33    39 
+[1] 0.475
+[1] 0.525
  2.5%   10%   50%   90% 97.5% 
-  -14   -10    -3     5    10 
-[1] 0
-[1] 1
+  -13    -9    -2     7    12 
+[1] 0.001
+[1] 0.999
  2.5%   10%   50%   90% 97.5% 
-   10    15    26    39    47 
-[1] 0.76
-[1] 0.24
+   10    15    26    39    45 
+[1] 0.747
+[1] 0.253
  2.5%   10%   50%   90% 97.5% 
-   41    47    63    80    91 
+   46    53    68    86    98 
 [1] 1
 [1] 0</code></pre>
 </div>
@@ -582,10 +608,10 @@ For model setting 2
 <p>ranking probabilistic</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.834</code></pre>
+<pre><code>[1] 0.756</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.834</code></pre>
+<pre><code>[1] 0.756</code></pre>
 </div>
 </div>
 </section>

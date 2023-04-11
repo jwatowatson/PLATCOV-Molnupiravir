@@ -84,8 +84,8 @@ plot_serial_data = function(xx, xlims=c(0,7), plot_points=T, alpha.f=.3){
   
   par(las=1)
   plot(summary_VL_data$Timepoint_ID, summary_VL_data$daily_VL,
-       ylab = 'SARS CoV2 genomes/mL', panel.first=grid(),
-       xlab = 'Time since randomization (days)',
+       ylab = 'SARS-CoV-2 genomes/mL', panel.first=grid(),
+       xlab = 'Time since randomisation (days)',
        xlim = xlims, yaxt='n',type='n',
        ylim = c(0.7, 8))
   axis(2, at = c(2,4,6,8), labels = c(expression(10^2),
@@ -125,6 +125,7 @@ make_stan_inputs = function(input_data_fit,
                             slope_covs_base,
                             slope_covs_full,
                             trt_frmla,
+                            epoch=NA,
                             Dmax
 ){
   
@@ -209,6 +210,10 @@ make_stan_inputs = function(input_data_fit,
                             log10_cens_vl = input_data_fit$log10_cens_vl,
                             RNaseP = input_data_fit$RnaseP_scaled,
                             Time_max = Dmax)
+  if(!is.na(epoch)){
+    analysis_data_stan$epoch = as.numeric(as.factor(input_data_fit$Epoch))
+    analysis_data_stan$K_epoch = max(analysis_data_stan$epoch)
+  }
   ID_map = ID_map[!duplicated(ID_map$ID_key), ]
   
   writeLines('check stan data formatting:')
@@ -228,7 +233,13 @@ make_stan_inputs = function(input_data_fit,
 }
 
 
-
+plot_variants = function(platcov_dat){
+  platcov_dat = platcov_dat %>%
+    mutate(year_month = paste(year(Rand_date), month(Rand_date), sep = '_')) %>%
+    distinct(ID, .keep_all = T)
+  xx=aggregate(Variant ~ year_month, data = platcov_dat, table)
+  
+}
 
 
 get_rates_linear_mod = function(mod_out, # single model fit - not a list
@@ -480,15 +491,15 @@ calculate_fever_clearance = function(temp_dat,
                                      window_clear = 24/24, # look ahead window to define "fever clearance"
                                      threshold=37){
   
-  if(!'temperature_ax' %in% colnames(temp_dat)) stop('needs to contain a temperature_ax column')
+  if(!'ax_temperature' %in% colnames(temp_dat)) stop('needs to contain a ax_temperature column')
   
   temp_dat$clearance_time = NA
   # For interval censored data, the status indicator is 0=right censored, 1=event at time, 2=left censored, 3=interval censored. 
   temp_dat$clearance_time_cens = 1
   
-  temp_dat$fever_binary = temp_dat$temperature_ax>threshold
+  temp_dat$fever_binary = temp_dat$ax_temperature>threshold
   temp_dat = dplyr::arrange(temp_dat, ID, Time) 
-  temp_dat = temp_dat[!is.na(temp_dat$temperature_ax), ]
+  temp_dat = temp_dat[!is.na(temp_dat$ax_temperature), ]
   
   for(id in unique(temp_dat$ID)){
     ind = temp_dat$ID==id
@@ -537,6 +548,7 @@ make_slopes_plot = function(stan_out,
   t12_output = data.frame(t_12_med = 24*log10(.5)/(apply(slopes,2,mean)),
                           t_12_up = 24*log10(.5)/(apply(slopes,2,quantile,.9)),
                           t_12_low = 24*log10(.5)/(apply(slopes,2,quantile,.1)),
+                          slope = apply(slopes,2,mean),
                           ID_stan = analysis_data_stan$id[analysis_data_stan$ind_start])
   t12_output = merge(t12_output, ID_map, by = 'ID_stan')
   data_summary = merge(data_summary, t12_output, by.x = 'ID', by.y = 'ID_key')

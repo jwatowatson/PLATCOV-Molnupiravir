@@ -256,18 +256,18 @@ for(i in 1:length(ff)){
 ```{r Figure_main, fig.height=6, fig.width=9}
 par(las=1, mar=c(5,5,2,2),cex.lab=1.3, cex.axis=1.3, mfrow=c(1,2))
 plot_serial_data(xx = platcov_dat_analysis,xlims = c(0,7))
-mtext(text = 'a',side = 3,line = 1.5,adj = 0,cex = 1.5)
+mtext(text = 'a',side = 3,line = 0.5,adj = 0,cex = 1.5)
 
 par(las=1, mar=c(5,8,2,2))
 plot_effect_estimates(effect_ests = effect_ests,
-                      plot_models = 1:length(ff),
+                      plot_models = 1:2,
                       study_threshold = study_threshold,
-                      mod_cols = model_cols[1:length(ff)],
-                      my_pch = 15)
+                      mod_cols = model_cols[1:2],
+                      my_pch = 15:16)
 # title(intervention)
 legend('right',pch=15:16,legend = c('Linear','Non-linear'),
        col = model_cols,inset=0.03, cex=1.5)
-mtext(text = 'b',side = 3,line = 1.5,adj = 0,cex = 1.5)
+mtext(text = 'b',side = 3,line = 0.5,adj = 0,cex = 1.5)
 
 for(i in 1:length(ff)){
   load(ff[i])
@@ -291,6 +291,19 @@ for(i in 1:length(ff)){
   
 }
 ```
+
+All models
+
+```{r all_models_sensitivity}
+par(las=1, mar=c(5,8,2,2))
+plot_effect_estimates(effect_ests = effect_ests,
+                      plot_models = 1:length(ff),
+                      study_threshold = study_threshold,
+                      mod_cols = model_cols[1:length(ff)],
+                      my_pch = rep(15:16,4))
+```
+
+
 
 ```{r slopes_plot}
 load(ff[main_mod])
@@ -352,7 +365,7 @@ platcov_dat_rebound = platcov_dat_rebound %>% filter(rebound==1)
 for(tt in unique(platcov_dat_rebound$Trt)){
   xx = platcov_dat_rebound %>% filter(Trt==tt)
   plot(xx$Time, xx$daily_VL, panel.first=grid(),
-       xlab='Time since randomization (days)', ylab = 'SARS CoV2 genomes/mL',
+       xlab='Time since randomisation (days)', ylab = 'SARS CoV2 genomes/mL',
        ylim = range(platcov_dat$daily_VL), xlim=c(0,15),
        col = xx$trt_color)
   title(paste0(tt,' (n=',length(unique(xx$ID)),'/',
@@ -451,22 +464,32 @@ plot_individ_curves(platcov_dat = platcov_dat,
                     xlims = c(0,15))
 ```
 
-## Fever clearance
+# Fever clearance
 
-```{r}
+```{r fever_clearance}
 platcov_temp = read_csv(file = 'Analysis_Data/Paxlovid_Molnupiravir_meta_fever.csv')
 
 platcov_temp = platcov_temp %>% filter(ID %in% platcov_dat_analysis$ID) %>%
   ungroup() %>%
   arrange(ID, Time) %>% 
   group_by(ID) %>%
-  mutate(include_analysis = any(Time>=2)) %>%
-  ungroup() %>% filter(include_analysis, Fever_Baseline==1)
+  mutate(include_analysis = any(Time>=2),
+         Fever_Baseline = any(ax_temperature>37 & Time<=1)) %>%
+  ungroup() %>% filter(include_analysis, Fever_Baseline, Time>=0)
 
 length(unique(platcov_temp$ID))
 temp_clearance = calculate_fever_clearance(temp_dat = platcov_temp,
-                                           window_clear = 48/24)
-temp_clearance = merge(temp_clearance, platcov_dat_analysis[!duplicated(platcov_dat_analysis$ID),], by = 'ID')
+                                           window_clear = 24/24)
+temp_clearance = merge(temp_clearance, platcov_dat_analysis[!duplicated(platcov_dat_analysis$ID),c('ID','Trt')],
+                       by = 'ID')
 fit <- survfit(Surv(clearance_time, clearance_time_cens) ~ Trt, data = temp_clearance) 
-ggsurvplot(fit = fit, data = temp_clearance)
+survdiff(Surv(clearance_time, clearance_time_cens) ~ Trt, data = temp_clearance) 
+ggsurvplot(fit = fit, data = temp_clearance,risk.table = T,
+           legend.labs =c("Nirmatrelvir + Ritonavir", 
+                          "Molnupiravir",
+                          "No study drug"),
+           xlab = 'Time (days)', ylab = 'Proportion with fever',
+           ggtheme = theme_light(),
+           risk.table.y.text.col = T,
+           risk.table.y.text=F,cex.lab=1.5,cex.axis=1.5)
 ```

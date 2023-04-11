@@ -19,6 +19,9 @@ library(tidyverse)
 library(kableExtra)
 library(finalfit)
 library(RColorBrewer)
+library(survival)
+library(survminer)
+library(lubridate)
 
 ## information on software/hardware used
 version
@@ -49,7 +52,7 @@ study_threshold = 1.2 # depending on comparison with no study drug or positive c
 # set as file with relevant dataset
 itt_population_all = get_itt_population()
 
-f_name = paste0(intervention,'_analysis.csv')
+f_name = paste0('Analysis_Data/', intervention,'_analysis.csv')
 platcov_dat = read.csv(f_name)
 platcov_dat$Rand_date = as.POSIXct(platcov_dat$Rand_date)
 trt_intervention = unique(platcov_dat$Trt)
@@ -135,13 +138,13 @@ platcov_dat_analysis =
   filter(Time <= Dmax, mITT) %>%
   arrange(log10_viral_load==log10_cens_vl) %>%
   mutate(Variant = factor(Variant, levels = c('Delta','BA.1','BA.2','BA.3','BA.4','BA.5')),
-         Epoch = as.factor(Epoch),
+         Epoch = paste(month(Rand_date), year(Rand_date), sep = '_'),
          Site = factor(Site, levels = c('th001','th057','th058','br003')),
          RnaseP_scaled = scale(40 - CT_RNaseP,scale = F),
          Mean_age = mean(Age[!duplicated(ID)]),
          SD_age = sd(Age[!duplicated(ID)]),
          Age_scaled = (Age-Mean_age)/SD_age,
-         Symptom_onset = ifelse(is.na(Symptom_onset),2,Symptom_onset)) 
+         Symptom_onset = ifelse(is.na(Symptom_onset),2,Symptom_onset),) 
 
 
 writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s above LLOD, %s%%)',
@@ -150,22 +153,23 @@ writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s 
                    sum(platcov_dat_analysis$CT_NS<40),
                    round(100*mean(platcov_dat_analysis$CT_NS<40))))
 
-covs_base = c('Variant', 'Epoch')
+covs_base = c('Variant')
 covs_full=c(covs_base, 'Age_scaled','Symptom_onset', 'Sex')
 stan_inputs = 
   make_stan_inputs(input_data_fit = platcov_dat_analysis,
                    int_covs_base = covs_base,
                    int_covs_full = covs_full,
-                   slope_covs_base = covs_base,
-                   slope_covs_full = covs_full,
+                   slope_covs_base = c(covs_base),
+                   slope_covs_full = c(covs_full),
                    trt_frmla = formula('~ Trt'),
+                   epoch = T,
                    Dmax = Dmax)
 ```
 
 ```{r setup_models}
 all_mods = list.files('Stan_models',full.names = TRUE,pattern = '*stan')
 
-model_settings = expand.grid(mod = all_mods[2:3],
+model_settings = expand.grid(mod = all_mods,
                              prior = 1,
                              cov_matrices = 1)
 
@@ -240,10 +244,10 @@ plot_serial_data(xx = platcov_dat_analysis %>% mutate(Trt=gsub(pattern='+ Ritona
 
 par(las=1, mar=c(5,8,2,2))
 plot_effect_estimates(effect_ests = effect_ests,
-                      plot_models = 1:length(ff),
+                      plot_models = 1:4,
                       study_threshold = study_threshold,
-                      mod_cols = model_cols[1:length(ff)],
-                      my_pch = 15:16)
+                      mod_cols = model_cols[1:4],
+                      my_pch = 15)
 # title(intervention)
 legend('bottomright',pch=15:16,legend = c('Linear','Non-linear'),
        col = model_cols,inset=0.03, cex=1.2)
@@ -280,4 +284,67 @@ colnames(theta_trt) = gsub(pattern = 'Trt',replacement = '',x = colnames(stan_in
 mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
 mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
 
+```
+
+# Fever clearance
+
+```{r fever_clearance}
+platcov_temp = read_csv(file = 'Analysis_Data/Paxlovid_Molnupiravir_meta_fever.csv')
+
+platcov_temp = platcov_temp %>% filter(ID %in% platcov_dat_analysis$ID) %>%
+  ungroup() %>%
+  arrange(ID, Time) %>% 
+  group_by(ID) %>%
+  mutate(include_analysis = any(Time>=2),
+         Fever_Baseline = any(ax_temperature>37 & Time<=1)) %>%
+  ungroup() %>% filter(include_analysis, Fever_Baseline, Time>=0)
+
+length(unique(platcov_temp$ID))
+temp_clearance = calculate_fever_clearance(temp_dat = platcov_temp,
+                                           window_clear = 24/24)
+temp_clearance = merge(temp_clearance, platcov_dat_analysis[!duplicated(platcov_dat_analysis$ID),c('ID','Trt')],
+                       by = 'ID')
+fit <- survfit(Surv(clearance_time, clearance_time_cens) ~ Trt, data = temp_clearance) 
+survdiff(Surv(clearance_time, clearance_time_cens) ~ Trt, data = temp_clearance) 
+ggsurvplot(fit = fit, data = temp_clearance,risk.table = T,
+           # legend.labs =c("Nirmatrelvir + Ritonavir", 
+           #                "Molnupiravir",
+           #                "No study drug"),
+           xlab = 'Time (days)', ylab = 'Proportion with fever',
+           ggtheme = theme_light(),
+           risk.table.y.text.col = T,
+           risk.table.y.text=F,cex.lab=1.5,cex.axis=1.5)
+```
+
+compare with viral clearance slope
+
+```{r viral_clearance_vs_fever}
+load(ff[2])
+par(las=1, cex.lab=1.5, cex.axis=1.5)
+xx1=make_slopes_plot(stan_out = out, 
+                    analysis_data_stan = stan_inputs$analysis_data_stan,
+                    ID_map = stan_inputs$ID_map,
+                    data_summary = Baseline_data,
+                    my_lims = c(2,50),
+                    my_vals = c(5,15,25,35,45))
+
+  par(mar=c(5,5,3,2))
+temp_clearance = merge(temp_clearance, 
+                       xx1[, c('ID',"t_12_med","t_12_up","t_12_low",'slope')],
+                       by='ID')
+par(las=1, family='serif', cex.lab=1.3, cex.axis=1.3)
+plot(temp_clearance$clearance_time, temp_clearance$slope,
+     xlab='Time to fever clearance (days)', 
+     ylab = 'Viral clearance slope coefficient',
+     panel.first=grid())
+cor.test(temp_clearance$clearance_time, temp_clearance$slope)
+mod = MASS::rlm(temp_clearance$slope ~ temp_clearance$clearance_time)
+summary(mod)
+abline(mod,lty=2, lwd=2)
+long_fever = platcov_dat %>% filter(ID %in% temp_clearance$ID[which(temp_clearance$clearance_time>4)])
+par(mfrow=c(2,3))
+for(id in unique(long_fever$ID)){
+  xx = long_fever %>% filter(ID==id)
+  plot(xx$Time, xx$log10_viral_load)
+}
 ```

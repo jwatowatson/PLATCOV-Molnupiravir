@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -171,7 +171,18 @@ Attaching package: 'kableExtra'
 
 The following object is masked from 'package:dplyr':
 
-    group_rows</code></pre>
+    group_rows
+
+
+Loading required package: ggpubr
+
+
+Attaching package: 'survminer'
+
+
+The following object is masked from 'package:survival':
+
+    myeloma</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               _                           
@@ -206,40 +217,44 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
- [4] forcats_0.5.2        stringr_1.5.0        dplyr_1.0.10        
- [7] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
-[10] tibble_3.1.8         tidyverse_1.3.2      rstan_2.21.7        
-[13] ggplot2_3.4.0        StanHeaders_2.21.0-7
+ [1] survminer_0.4.9      ggpubr_0.5.0         survival_3.4-0      
+ [4] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
+ [7] forcats_0.5.2        stringr_1.5.0        dplyr_1.0.10        
+[10] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
+[13] tibble_3.1.8         tidyverse_1.3.2      rstan_2.21.7        
+[16] ggplot2_3.4.0        StanHeaders_2.21.0-7
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.4          splines_4.2.2       viridisLite_0.4.1  
- [4] jsonlite_1.8.4      modelr_0.1.10       RcppParallel_5.1.5 
- [7] assertthat_0.2.1    stats4_4.2.2        googlesheets4_1.0.1
-[10] cellranger_1.1.0    yaml_2.3.6          lattice_0.20-45    
-[13] pillar_1.8.1        backports_1.4.1     glue_1.6.2         
-[16] digest_0.6.31       rvest_1.0.3         colorspace_2.0-3   
-[19] Matrix_1.5-1        htmltools_0.5.4     pkgconfig_2.0.3    
-[22] broom_1.0.2         haven_2.5.1         webshot_0.5.4      
-[25] scales_1.2.1        processx_3.8.0      svglite_2.1.1      
-[28] tzdb_0.3.0          timechange_0.1.1    googledrive_2.0.0  
-[31] generics_0.1.3      ellipsis_0.3.2      withr_2.5.0        
-[34] cli_3.4.1           survival_3.4-0      magrittr_2.0.3     
-[37] crayon_1.5.2        readxl_1.4.1        evaluate_0.19      
-[40] ps_1.7.2            mice_3.15.0         fs_1.5.2           
-[43] fansi_1.0.3         xml2_1.3.3          pkgbuild_1.4.0     
-[46] tools_4.2.2         loo_2.5.1           prettyunits_1.1.1  
-[49] hms_1.1.2           gargle_1.2.1        lifecycle_1.0.3    
-[52] matrixStats_0.63.0  munsell_0.5.0       reprex_2.0.2       
-[55] callr_3.7.3         compiler_4.2.2      systemfonts_1.0.4  
-[58] rlang_1.0.6         grid_4.2.2          rstudioapi_0.14    
-[61] htmlwidgets_1.6.0   rmarkdown_2.19      boot_1.3-28        
-[64] gtable_0.3.1        codetools_0.2-18    inline_0.3.19      
-[67] DBI_1.1.3           R6_2.5.1            gridExtra_2.3      
-[70] lubridate_1.9.0     knitr_1.41          fastmap_1.1.0      
-[73] utf8_1.2.2          stringi_1.7.8       parallel_4.2.2     
-[76] Rcpp_1.0.9          vctrs_0.5.1         dbplyr_2.2.1       
-[79] tidyselect_1.2.0    xfun_0.35          </code></pre>
+ [1] matrixStats_0.63.0  fs_1.5.2            lubridate_1.9.0    
+ [4] webshot_0.5.4       httr_1.4.4          tools_4.2.2        
+ [7] backports_1.4.1     utf8_1.2.2          R6_2.5.1           
+[10] DBI_1.1.3           colorspace_2.0-3    withr_2.5.0        
+[13] tidyselect_1.2.0    gridExtra_2.3       prettyunits_1.1.1  
+[16] processx_3.8.0      compiler_4.2.2      cli_3.4.1          
+[19] rvest_1.0.3         mice_3.15.0         xml2_1.3.3         
+[22] scales_1.2.1        survMisc_0.5.6      callr_3.7.3        
+[25] systemfonts_1.0.4   digest_0.6.31       rmarkdown_2.19     
+[28] svglite_2.1.1       pkgconfig_2.0.3     htmltools_0.5.4    
+[31] dbplyr_2.2.1        fastmap_1.1.0       htmlwidgets_1.6.0  
+[34] rlang_1.0.6         readxl_1.4.1        rstudioapi_0.14    
+[37] generics_0.1.3      zoo_1.8-11          jsonlite_1.8.4     
+[40] car_3.1-1           googlesheets4_1.0.1 inline_0.3.19      
+[43] magrittr_2.0.3      loo_2.5.1           Matrix_1.5-1       
+[46] Rcpp_1.0.9          munsell_0.5.0       fansi_1.0.3        
+[49] abind_1.4-5         lifecycle_1.0.3     stringi_1.7.8      
+[52] yaml_2.3.6          carData_3.0-5       pkgbuild_1.4.0     
+[55] grid_4.2.2          parallel_4.2.2      crayon_1.5.2       
+[58] lattice_0.20-45     haven_2.5.1         splines_4.2.2      
+[61] hms_1.1.2           knitr_1.41          ps_1.7.2           
+[64] pillar_1.8.1        boot_1.3-28         ggsignif_0.6.4     
+[67] codetools_0.2-18    stats4_4.2.2        reprex_2.0.2       
+[70] glue_1.6.2          evaluate_0.19       data.table_1.14.6  
+[73] RcppParallel_5.1.5  modelr_0.1.10       vctrs_0.5.1        
+[76] tzdb_0.3.0          cellranger_1.1.0    gtable_0.3.1       
+[79] km.ci_0.5-6         assertthat_0.2.1    xfun_0.35          
+[82] xtable_1.8-4        broom_1.0.2         rstatix_0.7.1      
+[85] googledrive_2.0.0   viridisLite_0.4.1   gargle_1.2.1       
+[88] KMsurv_0.1-5        timechange_0.1.1    ellipsis_0.3.2     </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in checkStrict(plot_serial_data): global variables used: daily_VL, ID,
@@ -265,21 +280,22 @@ Missing patients in Remdesivir arm:
  [6] "PLT-BR3-012"  "PLT-BR3-013"  "PLT-BR3-016"  "PLT-BR3-019"  "PLT-BR3-022" 
 [11] "PLT-BR3-026"  "PLT-BR3-027"  "PLT-BR3-035" 
 Missing patients in No study drug arm:
- [1] "PLT-TH1-056"  "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
- [6] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
-[11] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
-[16] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
-[21] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
-[26] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090"  "PLT-BR3-092" 
+ [1] "PLT-TH1-056"  "PLT-TH1-660"  "PLT-TH1-668"  "PLT-TH1-669"  "PLT-TH1-670" 
+ [6] "PLT-TH1-673"  "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
+[11] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
+[16] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
+[21] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
+[26] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
+[31] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090"  "PLT-BR3-092" 
 Missing patients in Favipiravir arm:
  [1] "PLT-TH57-004" "PLT-TH57-006" "PLT-BR3-001"  "PLT-BR3-005"  "PLT-BR3-007" 
  [6] "PLT-BR3-009"  "PLT-BR3-014"  "PLT-BR3-015"  "PLT-BR3-023"  "PLT-BR3-025" 
 [11] "PLT-BR3-028"  "PLT-BR3-029"  "PLT-BR3-036"  "PLT-BR3-037"  "PLT-BR3-047" 
 [16] "PLT-BR3-049"  "PLT-BR3-051"  "PLT-BR3-056"  "PLT-BR3-058"  "PLT-BR3-059" 
 Missing patients in Molnupiravir arm:
-[1] "PLT-TH1-655"
+character(0)
 Missing patients in Nirmatrelvir + Ritonavir arm:
-[1] "PLT-TH1-450"</code></pre>
+[1] "PLT-TH1-450" "PLT-TH1-661" "PLT-TH1-662" "PLT-TH1-663" "PLT-TH1-672"</code></pre>
 </div>
 </div>
 </section>
@@ -291,13 +307,13 @@ Missing patients in Nirmatrelvir + Ritonavir arm:
 Intervention               FALSE TRUE
   Favipiravir                  0   96
   Ivermectin                   2   40
-  Molnupiravir                 0   64
+  Molnupiravir                 0   65
   Nirmatrelvir + Ritonavir     0   58
   No study drug                4  134
   Remdesivir                   0   54</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2021-09-30 +07" "2023-02-07 +07"</code></pre>
+<pre><code>[1] "2021-09-30 +07" "2023-02-15 +07"</code></pre>
 </div>
 </div>
 </section>
@@ -331,7 +347,7 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 40 (100.0) </td>
    <td style="text-align:right;"> 54 (100.0) </td>
    <td style="text-align:right;"> 96 (100.0) </td>
-   <td style="text-align:left;"> 64 (100.0) </td>
+   <td style="text-align:left;"> 65 (100.0) </td>
    <td style="text-align:right;"> 58 (100.0) </td>
   </tr>
   <tr>
@@ -341,7 +357,7 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 30.5 (7.1) </td>
    <td style="text-align:right;"> 30.6 (8.4) </td>
    <td style="text-align:right;"> 29.8 (7.5) </td>
-   <td style="text-align:left;"> 31.4 (7.5) </td>
+   <td style="text-align:left;"> 31.4 (7.4) </td>
    <td style="text-align:right;"> 30.5 (7.2) </td>
   </tr>
   <tr>
@@ -351,8 +367,8 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 22.5 (3.3) </td>
    <td style="text-align:right;"> 22.7 (2.8) </td>
    <td style="text-align:right;"> 22.8 (3.7) </td>
-   <td style="text-align:left;"> 23.0 (3.9) </td>
-   <td style="text-align:right;"> 22.8 (3.0) </td>
+   <td style="text-align:left;"> 23.1 (4.0) </td>
+   <td style="text-align:right;"> 22.7 (3.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Weight </td>
@@ -361,8 +377,8 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 62.0 (12.6) </td>
    <td style="text-align:right;"> 63.7 (10.9) </td>
    <td style="text-align:right;"> 62.4 (13.8) </td>
-   <td style="text-align:left;"> 63.4 (14.8) </td>
-   <td style="text-align:right;"> 63.2 (11.4) </td>
+   <td style="text-align:left;"> 63.5 (14.8) </td>
+   <td style="text-align:right;"> 62.9 (11.4) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Baseline.viral.load </td>
@@ -381,7 +397,7 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 18 (45.0) </td>
    <td style="text-align:right;"> 27 (50.0) </td>
    <td style="text-align:right;"> 38 (39.6) </td>
-   <td style="text-align:left;"> 28 (43.8) </td>
+   <td style="text-align:left;"> 28 (43.1) </td>
    <td style="text-align:right;"> 23 (39.7) </td>
   </tr>
   <tr>
@@ -391,7 +407,7 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 22 (55.0) </td>
    <td style="text-align:right;"> 27 (50.0) </td>
    <td style="text-align:right;"> 58 (60.4) </td>
-   <td style="text-align:left;"> 36 (56.2) </td>
+   <td style="text-align:left;"> 37 (56.9) </td>
    <td style="text-align:right;"> 35 (60.3) </td>
   </tr>
   <tr>
@@ -417,12 +433,12 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.2 </td>
-   <td style="text-align:left;"> 72 (53.7) </td>
+   <td style="text-align:left;"> 74 (55.2) </td>
    <td style="text-align:right;"> 18 (45.0) </td>
    <td style="text-align:right;"> 28 (51.9) </td>
    <td style="text-align:right;"> 38 (39.6) </td>
-   <td style="text-align:left;"> 32 (50.0) </td>
-   <td style="text-align:right;"> 28 (48.3) </td>
+   <td style="text-align:left;"> 34 (52.3) </td>
+   <td style="text-align:right;"> 29 (50.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
@@ -437,12 +453,12 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> BA.5 </td>
-   <td style="text-align:left;"> 42 (31.3) </td>
+   <td style="text-align:left;"> 40 (29.9) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
    <td style="text-align:right;"> 27 (28.1) </td>
-   <td style="text-align:left;"> 30 (46.9) </td>
-   <td style="text-align:right;"> 27 (46.6) </td>
+   <td style="text-align:left;"> 29 (44.6) </td>
+   <td style="text-align:right;"> 26 (44.8) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
@@ -462,27 +478,27 @@ Intervention               FALSE TRUE
    <td style="text-align:right;"> 2.4 (0.8) </td>
    <td style="text-align:right;"> 2.1 (0.7) </td>
    <td style="text-align:left;"> 2.1 (0.6) </td>
-   <td style="text-align:right;"> 2.0 (0.7) </td>
+   <td style="text-align:right;"> 2.1 (0.7) </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Vaccinated </td>
    <td style="text-align:right;"> Yes </td>
-   <td style="text-align:left;"> 130 (97.0) </td>
+   <td style="text-align:left;"> 134 (100.0) </td>
    <td style="text-align:right;"> 39 (97.5) </td>
    <td style="text-align:right;"> 51 (94.4) </td>
    <td style="text-align:right;"> 94 (97.9) </td>
-   <td style="text-align:left;"> 60 (93.8) </td>
-   <td style="text-align:right;"> 56 (96.6) </td>
+   <td style="text-align:left;"> 63 (96.9) </td>
+   <td style="text-align:right;"> 58 (100.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;"> No </td>
-   <td style="text-align:left;"> 4 (3.0) </td>
+   <td style="text-align:left;"> 0 (0.0) </td>
    <td style="text-align:right;"> 1 (2.5) </td>
    <td style="text-align:right;"> 3 (5.6) </td>
    <td style="text-align:right;"> 2 (2.1) </td>
-   <td style="text-align:left;"> 4 (6.2) </td>
-   <td style="text-align:right;"> 2 (3.4) </td>
+   <td style="text-align:left;"> 2 (3.1) </td>
+   <td style="text-align:right;"> 0 (0.0) </td>
   </tr>
 </tbody>
 </table>
@@ -494,17 +510,17 @@ Intervention               FALSE TRUE
 <h2 class="anchored" data-anchor-id="fit-models"><em>Fit models</em></h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Analysis dataset contains 446 patients and 8016 datapoints (6933 above LLOD, 86%)</code></pre>
+<pre><code>Analysis dataset contains 447 patients and 8032 datapoints (6944 above LLOD, 86%)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>There are a total of 446 patients in the database with a total of 8016 PCRs analysable
-13.51% of samples are below LOD
+<pre><code>There are a total of 447 patients in the database with a total of 8032 PCRs analysable
+13.55% of samples are below LOD
 check stan data formatting:</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>We are running all models with 4 chains and 2000 samples for each chain, discarding 1000 for burn-in and thining every 4, thus giving a total of 1000 posterior samples per model.</code></pre>
+<pre><code>We are running all models with 4 chains and 4000 samples for each chain, discarding 2000 for burn-in and thining every 4, thus giving a total of 2000 posterior samples per model.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -560,23 +576,23 @@ check stan data formatting:</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>For model setting 1
  2.5%   10%   50%   90% 97.5% 
-  -24   -18    -6     8    17 
-[1] 0.019
-[1] 0.981
+  -24   -18    -6     9    19 
+[1] 0.0205
+[1] 0.9795
  2.5%   10%   50%   90% 97.5% 
-    6    13    28    45    56 
-[1] 0.757
-[1] 0.243
+    7    14    28    45    55 
+[1] 0.7745
+[1] 0.2255
  2.5%   10%   50%   90% 97.5% 
-  -11    -6     3    12    19 
-[1] 0.021
-[1] 0.979
+  -10    -6     3    13    18 
+[1] 0.0135
+[1] 0.9865
  2.5%   10%   50%   90% 97.5% 
-   19    26    40    56    64 
-[1] 0.973
-[1] 0.027
+   19    27    42    57    67 
+[1] 0.969
+[1] 0.031
  2.5%   10%   50%   90% 97.5% 
-   63    72    92   113   127 
+   61    71    92   114   127 
 [1] 1
 [1] 0
 For model setting 2
@@ -608,10 +624,95 @@ For model setting 2
 <p>ranking probabilistic</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.756</code></pre>
+<pre><code>[1] 0.791</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.756</code></pre>
+<pre><code>[1] 0.791</code></pre>
+</div>
+</div>
+</section>
+<section id="fever-clearance" class="level1">
+<h1>Fever clearance</h1>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 6638 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): ID
+dbl (3): Time, ax_temperature, Fever_Baseline
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 174</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(clearance_time, clearance_time_cens) ~ 
+    Trt, data = temp_clearance)
+
+                              N Observed Expected (O-E)^2/E (O-E)^2/V
+Trt=No study drug            47       47     54.7    1.0782     1.612
+Trt=Ivermectin               17       17     18.9    0.1951     0.223
+Trt=Remdesivir               23       23     22.3    0.0197     0.023
+Trt=Favipiravir              40       40     42.9    0.1995     0.267
+Trt=Molnupiravir             23       23     20.3    0.3653     0.419
+Trt=Nirmatrelvir + Ritonavir 24       24     14.9    5.6222     6.289
+
+ Chisq= 7.7  on 5 degrees of freedom, p= 0.2 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/fever_clearance-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>compare with viral clearance slope</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>In No study drug the median clearance half life was 16.7 (range 3.5 to 40.6)
+In Ivermectin the median clearance half life was 18.2 (range 9 to 40.5)
+In Remdesivir the median clearance half life was 13.2 (range 5 to 42.8)
+In Favipiravir the median clearance half life was 16.8 (range 6.6 to 31.7)
+In Molnupiravir the median clearance half life was 11.5 (range 4.3 to 25.3)
+In Nirmatrelvir + Ritonavir the median clearance half life was 8.4 (range 3.5 to 21.9)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  temp_clearance$clearance_time and temp_clearance$slope
+t = 2.155, df = 172, p-value = 0.03255
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.01370709 0.30359270
+sample estimates:
+      cor 
+0.1621463 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-3.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>

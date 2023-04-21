@@ -384,17 +384,17 @@ Intervention               FALSE TRUE
    <td style="text-align:left;"> Variant </td>
    <td style="text-align:right;"> 207 (100.0) </td>
    <td style="text-align:left;"> BA.2 </td>
-   <td style="text-align:right;"> 29 (50.0) </td>
-   <td style="text-align:right;"> 34 (52.3) </td>
-   <td style="text-align:right;"> 41 (48.8) </td>
+   <td style="text-align:right;"> 1 (1.7) </td>
+   <td style="text-align:right;"> 5 (7.7) </td>
+   <td style="text-align:right;"> 10 (11.9) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:left;"> BA.5 </td>
-   <td style="text-align:right;"> 26 (44.8) </td>
-   <td style="text-align:right;"> 29 (44.6) </td>
-   <td style="text-align:right;"> 40 (47.6) </td>
+   <td style="text-align:right;"> 25 (43.1) </td>
+   <td style="text-align:right;"> 28 (43.1) </td>
+   <td style="text-align:right;"> 37 (44.0) </td>
   </tr>
   <tr>
    <td style="text-align:left;">  </td>
@@ -407,9 +407,25 @@ Intervention               FALSE TRUE
   <tr>
    <td style="text-align:left;">  </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:left;"> BA.3 </td>
+   <td style="text-align:left;"> BA.2.75 </td>
+   <td style="text-align:right;"> 27 (46.6) </td>
+   <td style="text-align:right;"> 27 (41.5) </td>
+   <td style="text-align:right;"> 33 (39.3) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:left;"> BQ.1 </td>
+   <td style="text-align:right;"> 1 (1.7) </td>
    <td style="text-align:right;"> 0 (0.0) </td>
-   <td style="text-align:right;"> 0 (0.0) </td>
+   <td style="text-align:right;"> 1 (1.2) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:left;"> XBB </td>
+   <td style="text-align:right;"> 1 (1.7) </td>
+   <td style="text-align:right;"> 3 (4.6) </td>
    <td style="text-align:right;"> 1 (1.2) </td>
   </tr>
   <tr>
@@ -458,7 +474,7 @@ check stan data formatting:</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>We are running all models with 4 chains and 2000 samples for each chain, discarding 1000 for burn-in and thining every 4, thus giving a total of 1000 posterior samples per model.</code></pre>
+<pre><code>We are running all models with 4 chains and 4000 samples for each chain, discarding 2000 for burn-in and thining every 4, thus giving a total of 2000 posterior samples per model.</code></pre>
 </div>
 </div>
 </section>
@@ -524,123 +540,123 @@ check stan data formatting:</code></pre>
 <pre><code>For model setting 1
 Molnupiravir relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -39   -34   -26   -16   -10 
-Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.979
-No Study Drug relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -55   -52   -47   -40   -36 
-Molnupiravir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   17    24    39    55    63 
-Nirmatrelvir+Ritonavir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   56    67    88   109   121 
-For model setting 2
-Molnupiravir relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -36   -33   -25   -15   -11 
-Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.984
-No Study Drug relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -49   -46   -40   -33   -29 
-Molnupiravir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-    7    13    26    40    47 
-Nirmatrelvir+Ritonavir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   42    50    67    87    95 
-For model setting 3
-Molnupiravir relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -39   -34   -26   -17   -11 
-Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.982
-No Study Drug relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -56   -53   -47   -41   -37 
-Molnupiravir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   19    26    40    58    68 
-Nirmatrelvir+Ritonavir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   60    70    90   113   129 
-For model setting 4
-Molnupiravir relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -37   -33   -25   -16   -10 
-Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.98
-No Study Drug relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -49   -47   -40   -33   -30 
-Molnupiravir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-    7    14    26    40    48 
-Nirmatrelvir+Ritonavir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   42    50    67    88    97 
-For model setting 5
-Molnupiravir relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -37   -33   -25   -16   -10 
+  -38   -34   -26   -16   -10 
 Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
 [1] 0.978
 No Study Drug relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -55   -52   -46   -40   -35 
+  -55   -52   -46   -39   -34 
 Molnupiravir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-   18    25    39    57    66 
+   14    22    37    53    64 
 Nirmatrelvir+Ritonavir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-   54    67    86   109   123 
+   52    64    84   107   121 
+For model setting 2
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -37   -32   -25   -16   -10 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.9725
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -48   -45   -39   -32   -28 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+    5    11    24    38    47 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   39    47    64    82    93 
+For model setting 3
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -39   -35   -26   -17   -11 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.9805
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -55   -52   -46   -39   -36 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   15    21    37    54    63 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   56    65    85   108   123 
+For model setting 4
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -37   -33   -25   -16   -11 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.9825
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -49   -45   -39   -32   -28 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+    6    11    23    37    46 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   39    47    64    83    95 
+For model setting 5
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -37   -33   -25   -16   -11 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.9785
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -55   -52   -46   -39   -35 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   14    23    37    54    63 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   54    64    84   107   120 
 For model setting 6
 Molnupiravir relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -36   -32   -24   -15   -10 
-Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.976
-No Study Drug relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -49   -46   -39   -32   -29 
-Molnupiravir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-    7    13    26    39    46 
-Nirmatrelvir+Ritonavir relative to No Study Drug:
- 2.5%   10%   50%   90% 97.5% 
-   40    48    65    85    96 
-For model setting 7
-Molnupiravir relative to Nirmatrelvir+Ritonavir:
- 2.5%   10%   50%   90% 97.5% 
-  -38   -34   -26   -16   -10 
+  -35   -32   -24   -15   -10 
 Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
 [1] 0.979
 No Study Drug relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -57   -53   -48   -41   -37 
+  -48   -45   -39   -32   -28 
 Molnupiravir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-   19    25    41    59    70 
+    6    12    24    38    48 
 Nirmatrelvir+Ritonavir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-   59    69    91   113   130 
+   39    46    64    82    93 
+For model setting 7
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -39   -34   -25   -16   -11 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.985
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -55   -52   -46   -39   -35 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   15    24    38    54    63 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   54    64    84   109   123 
 For model setting 8
 Molnupiravir relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -36   -33   -24   -16    -9 
+  -36   -32   -24   -15    -9 
 Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
-[1] 0.966
+[1] 0.972
 No Study Drug relative to Nirmatrelvir+Ritonavir:
  2.5%   10%   50%   90% 97.5% 
-  -50   -46   -40   -34   -30 
+  -49   -45   -39   -32   -27 
 Molnupiravir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-    8    14    26    41    51 
+    6    12    24    38    45 
 Nirmatrelvir+Ritonavir relative to No Study Drug:
  2.5%   10%   50%   90% 97.5% 
-   42    52    67    86    99 </code></pre>
+   38    46    64    83    95 </code></pre>
 </div>
 </div>
 <p>All models</p>
@@ -662,9 +678,9 @@ Nirmatrelvir+Ritonavir relative to No Study Drug:
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.4 (range 3.6 to 21.3)
-In Molnupiravir the median clearance half life was 11.4 (range 4.2 to 24.8)
-In No study drug the median clearance half life was 15.2 (range 3.8 to 39.9)</code></pre>
+<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.4 (range 3.7 to 21.2)
+In Molnupiravir the median clearance half life was 11.5 (range 4.1 to 24.7)
+In No study drug the median clearance half life was 15.4 (range 3.7 to 41.9)</code></pre>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -674,9 +690,9 @@ In No study drug the median clearance half life was 15.2 (range 3.8 to 39.9)</co
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.1 (range 3.3 to 21.6)
-In Molnupiravir the median clearance half life was 10.6 (range 4.4 to 24.7)
-In No study drug the median clearance half life was 14.1 (range 3.6 to 37.6)</code></pre>
+<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.2 (range 3.2 to 21.4)
+In Molnupiravir the median clearance half life was 10.6 (range 4.2 to 24.9)
+In No study drug the median clearance half life was 13.9 (range 3.6 to 39.7)</code></pre>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -945,8 +961,10 @@ graphical parameter</code></pre>
 </div>
 </section>
 </section>
-<section id="fever-clearance" class="level1">
-<h1>Fever clearance</h1>
+<section id="fever-and-symptom-clearance" class="level1">
+<h1>Fever and symptom clearance</h1>
+<section id="fever" class="level2">
+<h2 class="anchored" data-anchor-id="fever">fever</h2>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 6638 Columns: 4
@@ -981,6 +999,36 @@ Trt=No study drug            28       28     33.7    0.9558     1.802
 </div>
 </div>
 </div>
+</section>
+<section id="symptoms" class="level2">
+<h2 class="anchored" data-anchor-id="symptoms">Symptoms</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(Symptom_resolution, symp_censored) ~ 
+    Trt, data = platcov_symp)
+
+                              N Observed Expected (O-E)^2/E (O-E)^2/V
+Trt=Nirmatrelvir + Ritonavir 58       45     40.9     0.419     0.706
+Trt=Molnupiravir             64       54     41.7     3.609     6.162
+Trt=No study drug            84       58     74.4     3.619     8.688
+
+ Chisq= 9.7  on 2 degrees of freedom, p= 0.008 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/symptom_resolution-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE  &lt;NA&gt; 
+   78    79    49 </code></pre>
+</div>
+</div>
+</section>
 </section>
 
 </main>

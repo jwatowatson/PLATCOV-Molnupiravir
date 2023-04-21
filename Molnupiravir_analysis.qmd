@@ -145,8 +145,7 @@ platcov_dat_analysis =
   platcov_dat %>% ungroup() %>%
   filter(Time <= Dmax, mITT) %>%
   arrange(log10_viral_load==log10_cens_vl) %>%
-  mutate(Variant = factor(Variant, levels = c('Delta','BA.1','BA.2','BA.3','BA.4','BA.5')),
-         Site = factor(Site, levels = c('th001','th057','th058','br003')),
+  mutate(Variant = as.factor(Variant),
          RnaseP_scaled = scale(40 - CT_RNaseP,scale = F),
          Mean_age = mean(Age[!duplicated(ID)]),
          SD_age = sd(Age[!duplicated(ID)]),
@@ -160,8 +159,8 @@ writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s 
                    sum(platcov_dat_analysis$CT_NS<40),
                    round(100*mean(platcov_dat_analysis$CT_NS<40))))
 
-covs_base = c('Variant','Site')
-covs_full=c(covs_base, 'Age_scaled','Symptom_onset')
+covs_base = c('Variant')
+covs_full=c(covs_base, 'Age_scaled','Symptom_onset', 'Sex')
 stan_inputs = 
   make_stan_inputs(input_data_fit = platcov_dat_analysis,
                    int_covs_base = covs_base,
@@ -175,12 +174,12 @@ stan_inputs =
 ```{r setup_models}
 all_mods = list.files('Stan_models',full.names = TRUE,pattern = '*stan')
 
-model_settings = expand.grid(mod = all_mods[2:3],
+model_settings = expand.grid(mod = all_mods,
                              prior = 1:2,
                              cov_matrices = 1:2)
 
-model_settings$Niter = 2000
-model_settings$Nwarmup = 1000
+model_settings$Niter = 4000
+model_settings$Nwarmup = 2000
 model_settings$Nthin = 4
 model_settings$Nchain = 4
 
@@ -219,11 +218,11 @@ main model selection
 ```{r}
 main_mod = which(model_settings$prior==1&
                    model_settings$cov_matrices==1&
-                   model_settings$mod==all_mods[2])
+                   model_settings$mod==all_mods[1])
 
 main_mod_NL = which(model_settings$prior==1&
                    model_settings$cov_matrices==1&
-                   model_settings$mod==all_mods[3])
+                   model_settings$mod==all_mods[2])
 
 model_cols = brewer.pal(n = 8, name = 'Dark2')[1:nrow(model_settings)]
 names(model_cols) = paste('model', 1:nrow(model_settings))
@@ -303,8 +302,6 @@ plot_effect_estimates(effect_ests = effect_ests,
                       my_pch = rep(15:16,4))
 ```
 
-
-
 ```{r slopes_plot}
 load(ff[main_mod])
 par(las=1, cex.lab=1.5, cex.axis=1.5)
@@ -367,7 +364,12 @@ for(tt in unique(platcov_dat_rebound$Trt)){
   plot(xx$Time, xx$daily_VL, panel.first=grid(),
        xlab='Time since randomisation (days)', ylab = 'SARS CoV2 genomes/mL',
        ylim = range(platcov_dat$daily_VL), xlim=c(0,15),
-       col = xx$trt_color)
+       col = xx$trt_color, yaxt='n')
+    axis(2, at = c(2,4,6,8), labels = c(expression(10^2),
+                                        expression(10^4),
+                                        expression(10^6),
+                                        expression(10^8)))
+    abline(v=c(2,3), lty=2)
   title(paste0(tt,' (n=',length(unique(xx$ID)),'/',
                length(unique(platcov_dat_analysis$ID[platcov_dat_analysis$Trt==tt])),')'))
   for(id in unique(xx$ID)){
@@ -464,7 +466,10 @@ plot_individ_curves(platcov_dat = platcov_dat,
                     xlims = c(0,15))
 ```
 
-# Fever clearance
+# Fever and symptom clearance
+
+
+## fever
 
 ```{r fever_clearance}
 platcov_temp = read_csv(file = 'Analysis_Data/Paxlovid_Molnupiravir_meta_fever.csv')
@@ -493,3 +498,41 @@ ggsurvplot(fit = fit, data = temp_clearance,risk.table = T,
            risk.table.y.text.col = T,
            risk.table.y.text=F,cex.lab=1.5,cex.axis=1.5)
 ```
+
+## Symptoms
+
+```{r symptom_resolution}
+symp_dat = read.csv('Analysis_Data/Paxlovid_Molnupiravir_meta_symptoms.csv')
+
+symp_dat = symp_dat %>% filter(ID %in% platcov_dat_analysis$ID) %>%
+  ungroup() %>%
+  arrange(ID, Timepoint_ID)
+symp_dat = merge(symp_dat, Baseline_data[, c('ID', 'Trt')], by='ID', all.x=T)
+
+symp_dat = symp_dat %>%
+  group_by(ID) %>%
+  mutate(symp_censored = as.numeric(any(Any_symptom==0)),
+         Symptom_resolution = ifelse(symp_censored==1,Timepoint_ID[which(Any_symptom==0)[1]],
+                                     max(Timepoint_ID))) %>% ungroup() 
+platcov_symp = symp_dat %>% distinct(ID, .keep_all = T)
+
+fit <- survfit(Surv(Symptom_resolution, symp_censored) ~ Trt, data = platcov_symp) 
+survdiff(Surv(Symptom_resolution, symp_censored) ~ Trt, data = platcov_symp) 
+ggsurvplot(fit = fit, data = platcov_symp,risk.table = T,
+           legend.labs =c("Nirmatrelvir + Ritonavir", 
+                          "Molnupiravir",
+                          "No study drug"),
+           xlab = 'Time (days)', ylab = 'Proportion with symptoms',
+           ggtheme = theme_light(),
+           risk.table.y.text.col = T,
+           risk.table.y.text=F,cex.lab=1.5,cex.axis=1.5)
+
+
+symp_rebound = symp_dat %>% group_by(ID) %>%
+  mutate(rebound = case_when(
+    symp_censored==0 ~ NA,
+    symp_censored==1 ~ any(Any_symptom[Timepoint_ID>Symptom_resolution+1]==1)
+  )) %>% distinct(ID, .keep_all = T)
+table(symp_rebound$rebound, useNA = 'ifany')
+```
+

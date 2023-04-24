@@ -468,7 +468,6 @@ plot_individ_curves(platcov_dat = platcov_dat,
 
 # Fever and symptom clearance
 
-
 ## fever
 
 ```{r fever_clearance}
@@ -512,7 +511,8 @@ symp_dat = merge(symp_dat, Baseline_data[, c('ID', 'Trt')], by='ID', all.x=T)
 symp_dat = symp_dat %>%
   group_by(ID) %>%
   mutate(symp_censored = as.numeric(any(Any_symptom==0)),
-         Symptom_resolution = ifelse(symp_censored==1,Timepoint_ID[which(Any_symptom==0)[1]],
+         Symptom_resolution = ifelse(symp_censored==1,
+                                     Timepoint_ID[which(Any_symptom==0)[1]],
                                      max(Timepoint_ID))) %>% ungroup() 
 platcov_symp = symp_dat %>% distinct(ID, .keep_all = T)
 
@@ -535,4 +535,3 @@ symp_rebound = symp_dat %>% group_by(ID) %>%
   )) %>% distinct(ID, .keep_all = T)
 table(symp_rebound$rebound, useNA = 'ifany')
 ```
-

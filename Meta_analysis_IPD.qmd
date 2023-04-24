@@ -349,7 +349,6 @@ for(id in unique(long_fever$ID)){
 }
 ```
 
-
 ## Symptoms
 
 ```{r symptom_clearance}

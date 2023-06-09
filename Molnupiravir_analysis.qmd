@@ -115,7 +115,8 @@ tab.ff <- Baseline_data %>% filter(mITT) %>%
     dependent = "Trt", # name of grouping / treatment variable
     explanatory = c("Site", "Age", 'BMI', "Weight",
                     "Baseline.viral.load",'Sex', 
-                    "Variant",'Symptom_onset','Vaccinated'),
+                    "Variant",'Symptom_onset','Vaccinated',
+                    "Any_dose_mRNA","N_dose_mRNA"),
     # total_col = TRUE, # add column with statistics for the whole sample
     add_row_total = TRUE, # add column with number of valid cases
     include_row_missing_col = FALSE,
@@ -160,7 +161,7 @@ writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s 
                    round(100*mean(platcov_dat_analysis$CT_NS<40))))
 
 covs_base = c('Variant')
-covs_full=c(covs_base, 'Age_scaled','Symptom_onset', 'Sex')
+covs_full=c(covs_base, 'Age_scaled','Symptom_onset','Sex')
 stan_inputs = 
   make_stan_inputs(input_data_fit = platcov_dat_analysis,
                    int_covs_base = covs_base,

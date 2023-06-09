@@ -97,7 +97,7 @@ transformed parameters {
     
     for(i in 1:Ntot){
       real intercept = alpha_0 + theta_rand_id[id[i]][1] + alpha_cov[i];
-      real a = beta_0[1] * exp(trt_slope[i]); // no random effect for the first term as does not converge
+      real a = beta_0[1]; // no random effect for the first term as does not converge
       real b = beta_0[2] * exp(theta_rand_id[id[i]][2] + trt_slope[i] + beta_cov[i]);
       real tmax = tmax_pop + theta_rand_id[id[i]][3];
       pred_log10_vl[i] = gamma_rnasep*RNaseP[i]+intercept+log(a+b)-

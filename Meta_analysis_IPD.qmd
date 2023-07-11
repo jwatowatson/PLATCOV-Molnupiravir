@@ -88,18 +88,20 @@ range(platcov_dat$Rand_date)
 
 ```{r}
 #| echo: false
-platcov_dat = platcov_dat %>% group_by(ID, Timepoint_ID) %>%
-  mutate(daily_VL = mean(log10_viral_load),
-         Sex = as.factor(ifelse(Sex==1,'Male','Female')),
+platcov_dat = platcov_dat %>% ungroup() %>%
+  mutate(Sex = as.factor(ifelse(Sex==1,'Male','Female')),
          Site = as.factor(Site),
          Trt = factor(Trt, levels=c(ref_arm, trts)),
          Vaccinated = as.factor(ifelse(N_dose>0,'Yes','No')),
-         Variant = as.factor(Variant)) %>% 
-  ungroup() %>%
-  mutate(trt_color = 
+         Variant = as.factor(Variant),
+         Study_time = as.numeric(difftime(Rand_date,min(Rand_date),units = 'weeks')),
+         Study_time = scale(Study_time),
+         trt_color = 
            as.character(plyr::mapvalues(Trt,
                                    from = names(trt_colors),
-                                   to = trt_colors)))
+                                   to = trt_colors))) %>% #normalise) 
+  group_by(ID, Timepoint_ID) %>%
+  mutate(daily_VL = mean(log10_viral_load)) 
 
 Baseline_data = platcov_dat %>% ungroup() %>% 
   distinct(ID, .keep_all = T) %>%
@@ -156,9 +158,9 @@ covs_base = c('Variant')
 covs_full=c(covs_base, 'Age_scaled','Symptom_onset', 'Sex')
 stan_inputs = 
   make_stan_inputs(input_data_fit = platcov_dat_analysis,
-                   int_covs_base = covs_base,
+                   int_covs_base = c(covs_base,'Symptom_onset'),
                    int_covs_full = covs_full,
-                   slope_covs_base = c(covs_base),
+                   slope_covs_base = c(covs_base, 'Study_time'),
                    slope_covs_full = c(covs_full),
                    trt_frmla = formula('~ Trt'),
                    epoch = T,

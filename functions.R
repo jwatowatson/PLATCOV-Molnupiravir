@@ -572,11 +572,11 @@ make_slopes_plot = function(stan_out,
   
   for(kk in which(!duplicated(data_summary$Trt))){
     ind = data_summary$Trt==data_summary$Trt[kk]
-    writeLines(sprintf('In %s the median clearance half life was %s (range %s to %s)',
+    writeLines(sprintf('In %s the median clearance half life was %s (IQR %s to %s)',
                        data_summary$Trt[kk],
                        round(median(data_summary$t_12_med[ind]),1),
-                       round(min(data_summary$t_12_med[ind]),1),
-                       round(max(data_summary$t_12_med[ind]),1)))
+                       round(quantile(data_summary$t_12_med[ind],probs=0.25),1),
+                       round(quantile(data_summary$t_12_med[ind],probs=0.75),1)))
     abline(v = median(data_summary$t_12_med[ind]), col=data_summary$trt_color[kk],lty=2,lwd=2)
   }
   

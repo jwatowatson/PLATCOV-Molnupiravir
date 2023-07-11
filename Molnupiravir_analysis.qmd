@@ -9,7 +9,7 @@ editor: visual
 knitr::opts_chunk$set(cache = F, cache.comments = FALSE,
                       echo = F, include = TRUE, 
                       fig.width = 8, fig.height = 8,
-                      fig.pos = 'H',dev = 'png', dpi = 300)
+                      fig.pos = 'H',dev = 'pdf', dpi = 300)
 
 ```
 
@@ -115,7 +115,7 @@ tab.ff <- Baseline_data %>% filter(mITT) %>%
     dependent = "Trt", # name of grouping / treatment variable
     explanatory = c("Site", "Age", 'BMI', "Weight",
                     "Baseline.viral.load",'Sex', 
-                    "Variant",'Symptom_onset','Vaccinated',
+                    "Variant",'Symptom_onset','Vaccinated','N_dose',
                     "Any_dose_mRNA","N_dose_mRNA"),
     # total_col = TRUE, # add column with statistics for the whole sample
     add_row_total = TRUE, # add column with number of valid cases
@@ -176,8 +176,8 @@ stan_inputs =
 all_mods = list.files('Stan_models',full.names = TRUE,pattern = '*stan')
 
 model_settings = expand.grid(mod = all_mods,
-                             prior = 1:2,
-                             cov_matrices = 1:2)
+                             prior = 1,
+                             cov_matrices = 1)
 
 model_settings$Niter = 4000
 model_settings$Nwarmup = 2000
@@ -231,12 +231,21 @@ names(model_cols) = paste('model', 1:nrow(model_settings))
 
 ## Check convergence
 
+```{r}
+
+```
+
 ```{r traceplots}
- load(ff[1])
- traceplot(out)
- 
- load(ff[2])
- traceplot(out)
+load(ff[1])
+traceplot(out)
+xx = summary(out)$summary
+xx[grep('trt_effect', rownames(xx)), 'Rhat']
+
+load(ff[2])
+traceplot(out)
+xx = summary(out)$summary
+xx[grep('trt_effect', rownames(xx)), 'Rhat']
+
 ```
 
 # Results
@@ -265,7 +274,7 @@ plot_effect_estimates(effect_ests = effect_ests,
                       mod_cols = model_cols[1:2],
                       my_pch = 15:16)
 # title(intervention)
-legend('right',pch=15:16,legend = c('Linear','Non-linear'),
+legend('left',pch=15:16,legend = c('Linear','Non-linear'),
        col = model_cols,inset=0.03, cex=1.5)
 mtext(text = 'b',side = 3,line = 0.5,adj = 0,cex = 1.5)
 
@@ -300,7 +309,7 @@ plot_effect_estimates(effect_ests = effect_ests,
                       plot_models = 1:length(ff),
                       study_threshold = study_threshold,
                       mod_cols = model_cols[1:length(ff)],
-                      my_pch = rep(15:16,4))
+                      my_pch = c(15:16))
 ```
 
 ```{r slopes_plot}
@@ -338,13 +347,13 @@ points(xx1$t_12_med, xx2$t_12_med, pch=16,col=xx1$trt_color)
 ```
 
 ```{r coef_plot}
-coef_to_plot=2
-coef_model = which(model_settings$prior==1&
-                     model_settings$cov_matrices==coef_to_plot&
-                     model_settings$mod==all_mods[2])
-load(ff[coef_model])
-par(las=1, mfrow=c(1,2), mar=c(5,7,2,2))
-plot_coef_effects(stan_out = out,cov_mat = coef_to_plot,stan_inputs = stan_inputs)
+# coef_to_plot=2
+# coef_model = which(model_settings$prior==1&
+#                      model_settings$cov_matrices==coef_to_plot&
+#                      model_settings$mod==all_mods[2])
+# load(ff[coef_model])
+# par(las=1, mfrow=c(1,2), mar=c(5,7,2,2))
+# plot_coef_effects(stan_out = out,cov_mat = coef_to_plot,stan_inputs = stan_inputs)
 ```
 
 ## Rebound
@@ -460,7 +469,8 @@ plot_data_model_fits(model_list = model_list,
                      models_to_plot = 1:2,
                      K_plots = 16, 
                      mod_cols = model_cols[1:2],
-                     ID_map = ID_map,analysis_data_stan = stan_inputs$analysis_data_stan)
+                     ID_map = ID_map,
+                     analysis_data_stan = stan_inputs$analysis_data_stan)
 par(mfrow=c(1,3), mar=c(3,3,2,2),las=1, cex.lab=1.5, cex.axis=1.5)
 plot_individ_curves(platcov_dat = platcov_dat, 
                     IDs = c('PLT-TH1-612', 'PLT-TH1-578', 'PLT-TH1-490'),

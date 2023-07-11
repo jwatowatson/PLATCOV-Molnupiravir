@@ -36,9 +36,11 @@ source('functions.R')
 trt_colors = get_trt_colors()
 ```
 
+
 ## Load data
 
 Set up analysis
+
 
 ```{r load_data}
 intervention = 'Paxlovid_Molnupiravir' # prefix of analysis file
@@ -72,7 +74,9 @@ if(length(trt_intervention)==0) stop('no interventions!')
 trts = trt_intervention[trt_intervention!=ref_arm] # get interventions
 ```
 
+
 ## Make modified intention to treat population
+
 
 ```{r make_analysis_data}
 #| echo: false
@@ -88,7 +92,9 @@ table(Intervention=pop_table$Trt, `mITT population` = pop_table$mITT)
 # PLT-TH1-450 left after first set of swabs
 ```
 
+
 ## Baseline characteristics
+
 
 ```{r}
 #| echo: false
@@ -133,9 +139,11 @@ tab.ff
 # save_kable(tab.ff,file = 'Baseline_characteristics.png')
 ```
 
+
 ## Model fits
 
 ### Construct data sets for model fitting
+
 
 ```{r}
 #| echo: false
@@ -199,7 +207,9 @@ save(model_settings,
      file = model_setup_f_name)
 ```
 
+
 ### Run models
+
 
 ```{r}
 if(RUN_MODELS){
@@ -214,7 +224,9 @@ if(!length(ff)==nrow(model_settings)) stop('not all outputs are ready for all mo
 ff = paste0('Rout/',ff)
 ```
 
+
 main model selection
+
 
 ```{r}
 main_mod = which(model_settings$prior==1&
@@ -229,7 +241,9 @@ model_cols = brewer.pal(n = 8, name = 'Dark2')[1:nrow(model_settings)]
 names(model_cols) = paste('model', 1:nrow(model_settings))
 ```
 
+
 ## Check convergence
+
 
 ```{r}
 
@@ -248,9 +262,11 @@ xx[grep('trt_effect', rownames(xx)), 'Rhat']
 
 ```
 
+
 # Results
 
 ## Get effects
+
 
 ```{r get_effects}
 effect_ests=list()
@@ -301,7 +317,9 @@ for(i in 1:length(ff)){
 }
 ```
 
+
 All models
+
 
 ```{r all_models_sensitivity}
 par(las=1, mar=c(5,8,2,2))
@@ -356,7 +374,9 @@ points(xx1$t_12_med, xx2$t_12_med, pch=16,col=xx1$trt_color)
 # plot_coef_effects(stan_out = out,cov_mat = coef_to_plot,stan_inputs = stan_inputs)
 ```
 
+
 ## Rebound
+
 
 ```{r rebound_visual_assessment}
 IDs_analysis = unique(platcov_dat_analysis$ID)
@@ -389,7 +409,9 @@ for(tt in unique(platcov_dat_rebound$Trt)){
 }
 ```
 
+
 ## Residual error
+
 
 ```{r residuals}
 my_titles = c('Nirmatrelvir','Molnupiravir','No study drug')
@@ -449,7 +471,9 @@ hist(linear_mod_residuals$mse)
 plot(linear_mod_residuals$slope, linear_mod_residuals$mse)
 ```
 
+
 ## Individual patient data
+
 
 ```{r individual_curves}
 model_list = list()
@@ -477,9 +501,11 @@ plot_individ_curves(platcov_dat = platcov_dat,
                     xlims = c(0,15))
 ```
 
+
 # Fever and symptom clearance
 
 ## fever
+
 
 ```{r fever_clearance}
 platcov_temp = read_csv(file = 'Analysis_Data/Paxlovid_Molnupiravir_meta_fever.csv')
@@ -510,7 +536,9 @@ ggsurvplot(fit = fit, data = temp_clearance,risk.table = T,
            risk.table.y.text=F,cex.lab=1.5,cex.axis=1.5)
 ```
 
+
 ## Symptoms
+
 
 ```{r symptom_resolution}
 symp_dat = read.csv('Analysis_Data/Paxlovid_Molnupiravir_meta_symptoms.csv')
@@ -548,3 +576,4 @@ symp_rebound = symp_dat %>% group_by(ID) %>%
   )) %>% distinct(ID, .keep_all = T)
 table(symp_rebound$rebound, useNA = 'ifany')
 ```
+

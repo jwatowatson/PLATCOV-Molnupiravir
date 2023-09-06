@@ -9,7 +9,7 @@ editor: visual
 knitr::opts_chunk$set(cache = F, cache.comments = FALSE,
                       echo = F, include = TRUE, 
                       fig.width = 8, fig.height = 8,
-                      fig.pos = 'H',dev = 'pdf', dpi = 300)
+                      fig.pos = 'H',dev = 'png', dpi = 300)
 
 ```
 

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="James Watson">
+
+<title>Molnupiravir vs nirmatrelvir+ritonavir</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Molnupiravir_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Molnupiravir_analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="Molnupiravir_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="Molnupiravir_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Molnupiravir_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Molnupiravir_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Molnupiravir_analysis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Molnupiravir_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Molnupiravir_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Molnupiravir_analysis_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="Molnupiravir_analysis_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Molnupiravir_analysis_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Molnupiravir vs nirmatrelvir+ritonavir</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>James Watson </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">cache =</span> F, <span class="at">cache.comments =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">echo =</span> F, <span class="at">include =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.width =</span> <span class="dv">8</span>, <span class="at">fig.height =</span> <span class="dv">8</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.pos =</span> <span class="st">'H'</span>,<span class="at">dev =</span> <span class="st">'png'</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: StanHeaders</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>rstan (Version 2.21.7, GitRev: 2e1f913d3ca3)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ tibble  3.2.1     ✔ dplyr   1.1.2
+✔ tidyr   1.2.1     ✔ stringr 1.5.0
+✔ readr   2.1.3     ✔ forcats 0.5.2
+✔ purrr   0.3.5     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ tidyr::extract() masks rstan::extract()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+
+Attaching package: 'kableExtra'
+
+
+The following object is masked from 'package:dplyr':
+
+    group_rows
+
+
+Loading required package: ggpubr
+
+
+Attaching package: 'survminer'
+
+
+The following object is masked from 'package:survival':
+
+    myeloma</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               _                           
+platform       aarch64-apple-darwin20      
+arch           aarch64                     
+os             darwin20                    
+system         aarch64, darwin20           
+status                                     
+major          4                           
+minor          2.2                         
+year           2022                        
+month          10                          
+day            31                          
+svn rev        83211                       
+language       R                           
+version.string R version 4.2.2 (2022-10-31)
+nickname       Innocent and Trusting       </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Ventura 13.2.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] survminer_0.4.9      ggpubr_0.5.0         survival_3.4-0      
+ [4] RColorBrewer_1.1-3   finalfit_1.0.6       kableExtra_1.3.4    
+ [7] forcats_0.5.2        stringr_1.5.0        dplyr_1.1.2         
+[10] purrr_0.3.5          readr_2.1.3          tidyr_1.2.1         
+[13] tibble_3.2.1         tidyverse_1.3.2      rstan_2.21.7        
+[16] ggplot2_3.4.0        StanHeaders_2.21.0-7
+
+loaded via a namespace (and not attached):
+ [1] matrixStats_0.63.0  fs_1.5.2            lubridate_1.9.0    
+ [4] webshot_0.5.4       httr_1.4.4          tools_4.2.2        
+ [7] backports_1.4.1     utf8_1.2.3          R6_2.5.1           
+[10] DBI_1.1.3           colorspace_2.0-3    withr_2.5.0        
+[13] tidyselect_1.2.0    gridExtra_2.3       prettyunits_1.1.1  
+[16] processx_3.8.0      compiler_4.2.2      cli_3.6.1          
+[19] rvest_1.0.3         mice_3.15.0         xml2_1.3.3         
+[22] scales_1.2.1        survMisc_0.5.6      callr_3.7.3        
+[25] systemfonts_1.0.4   digest_0.6.31       rmarkdown_2.19     
+[28] svglite_2.1.1       pkgconfig_2.0.3     htmltools_0.5.4    
+[31] dbplyr_2.2.1        fastmap_1.1.0       htmlwidgets_1.6.0  
+[34] rlang_1.1.0         readxl_1.4.1        rstudioapi_0.14    
+[37] generics_0.1.3      zoo_1.8-11          jsonlite_1.8.4     
+[40] car_3.1-1           googlesheets4_1.0.1 inline_0.3.19      
+[43] magrittr_2.0.3      loo_2.5.1           Matrix_1.5-1       
+[46] Rcpp_1.0.10         munsell_0.5.0       fansi_1.0.4        
+[49] abind_1.4-5         lifecycle_1.0.3     stringi_1.7.8      
+[52] yaml_2.3.6          carData_3.0-5       pkgbuild_1.4.0     
+[55] grid_4.2.2          parallel_4.2.2      crayon_1.5.2       
+[58] lattice_0.20-45     haven_2.5.1         splines_4.2.2      
+[61] hms_1.1.2           knitr_1.41          ps_1.7.2           
+[64] pillar_1.9.0        boot_1.3-28         ggsignif_0.6.4     
+[67] codetools_0.2-18    stats4_4.2.2        reprex_2.0.2       
+[70] glue_1.6.2          evaluate_0.19       data.table_1.14.6  
+[73] RcppParallel_5.1.5  modelr_0.1.10       vctrs_0.6.2        
+[76] tzdb_0.3.0          cellranger_1.1.0    gtable_0.3.1       
+[79] km.ci_0.5-6         assertthat_0.2.1    xfun_0.35          
+[82] xtable_1.8-4        broom_1.0.2         rstatix_0.7.1      
+[85] googledrive_2.0.0   viridisLite_0.4.1   gargle_1.2.1       
+[88] KMsurv_0.1-5        timechange_0.1.1    ellipsis_0.3.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkStrict(plot_serial_data): global variables used: daily_VL, ID,
+log10_viral_load, Time, Timepoint_ID, Trt, trt_color</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkStrict(calculate_fever_clearance): global variables used: ID,
+Time</code></pre>
+</div>
+</div>
+<section id="load-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
+<p>Set up analysis</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                Evusheld              Favipiravir               Fluoxetine 
+                      35                       40                       64 
+            Molnupiravir Nirmatrelvir + Ritonavir            No study drug 
+                      65                       59                       85 
+               Regeneron 
+                      35 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Missing patients in Molnupiravir arm:
+character(0)
+Missing patients in Nirmatrelvir + Ritonavir arm:
+[1] "PLT-TH1-450"
+Missing patients in No study drug arm:
+character(0)</code></pre>
+</div>
+</div>
+</section>
+<section id="make-modified-intention-to-treat-population" class="level2">
+<h2 class="anchored" data-anchor-id="make-modified-intention-to-treat-population">Make modified intention to treat population</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                          mITT population
+Intervention               FALSE TRUE
+  Molnupiravir                 0   65
+  Nirmatrelvir + Ritonavir     0   58
+  No study drug                1   84</code></pre>
+</div>
+</div>
+</section>
+<section id="baseline-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-characteristics">Baseline characteristics</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>The following `from` values were not present in `x`: Ivermectin, Regeneron, Remdesivir, Favipiravir, Nitazoxanide, Fluoxetine, Evusheld, Ensitrelvir</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Baseline characteristics</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Dependent: Trt</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total N</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Nirmatrelvir + Ritonavir</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Molnupiravir</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">No study drug</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Site</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">th001</td>
+<td style="text-align: right;">58 (100.0)</td>
+<td style="text-align: right;">65 (100.0)</td>
+<td style="text-align: right;">84 (100.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">29.0 (26.0 to 35.0)</td>
+<td style="text-align: right;">30.0 (26.0 to 36.0)</td>
+<td style="text-align: right;">29.0 (24.0 to 36.0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: right;">206 (99.5)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">22.5 (21.0 to 24.5)</td>
+<td style="text-align: right;">22.3 (20.3 to 25.8)</td>
+<td style="text-align: right;">22.5 (20.0 to 25.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: right;">206 (99.5)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">62.0 (54.2 to 70.0)</td>
+<td style="text-align: right;">60.0 (50.0 to 73.5)</td>
+<td style="text-align: right;">60.8 (53.0 to 70.0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Baseline.viral.load</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">5.4 (4.7 to 6.3)</td>
+<td style="text-align: right;">5.8 (5.0 to 6.4)</td>
+<td style="text-align: right;">5.6 (4.7 to 6.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">23 (39.7)</td>
+<td style="text-align: right;">28 (43.1)</td>
+<td style="text-align: right;">27 (32.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">35 (60.3)</td>
+<td style="text-align: right;">37 (56.9)</td>
+<td style="text-align: right;">57 (67.9)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variant</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">BA.2</td>
+<td style="text-align: right;">1 (1.7)</td>
+<td style="text-align: right;">5 (7.7)</td>
+<td style="text-align: right;">10 (11.9)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">BA.5</td>
+<td style="text-align: right;">25 (43.1)</td>
+<td style="text-align: right;">28 (43.1)</td>
+<td style="text-align: right;">37 (44.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">BA.4</td>
+<td style="text-align: right;">3 (5.2)</td>
+<td style="text-align: right;">2 (3.1)</td>
+<td style="text-align: right;">2 (2.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">BA.2.75</td>
+<td style="text-align: right;">27 (46.6)</td>
+<td style="text-align: right;">27 (41.5)</td>
+<td style="text-align: right;">33 (39.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">BQ.1</td>
+<td style="text-align: right;">1 (1.7)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1 (1.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">XBB</td>
+<td style="text-align: right;">1 (1.7)</td>
+<td style="text-align: right;">3 (4.6)</td>
+<td style="text-align: right;">1 (1.2)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Symptom_onset</td>
+<td style="text-align: right;">206 (99.5)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">2.0 (2.0 to 2.0)</td>
+<td style="text-align: right;">2.0 (2.0 to 2.0)</td>
+<td style="text-align: right;">2.0 (1.0 to 3.0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vaccinated</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">58 (100.0)</td>
+<td style="text-align: right;">64 (98.5)</td>
+<td style="text-align: right;">84 (100.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1 (1.5)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N_dose</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">Median (IQR)</td>
+<td style="text-align: right;">3.0 (3.0 to 4.0)</td>
+<td style="text-align: right;">3.0 (3.0 to 4.0)</td>
+<td style="text-align: right;">4.0 (3.0 to 4.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Any_dose_mRNA</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">7 (12.1)</td>
+<td style="text-align: right;">9 (13.8)</td>
+<td style="text-align: right;">7 (8.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">51 (87.9)</td>
+<td style="text-align: right;">56 (86.2)</td>
+<td style="text-align: right;">77 (91.7)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N_dose_mRNA</td>
+<td style="text-align: right;">207 (100.0)</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">7 (12.1)</td>
+<td style="text-align: right;">9 (13.8)</td>
+<td style="text-align: right;">7 (8.3)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">25 (43.1)</td>
+<td style="text-align: right;">27 (41.5)</td>
+<td style="text-align: right;">26 (31.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">22 (37.9)</td>
+<td style="text-align: right;">23 (35.4)</td>
+<td style="text-align: right;">43 (51.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">4 (6.9)</td>
+<td style="text-align: right;">6 (9.2)</td>
+<td style="text-align: right;">8 (9.5)</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="model-fits" class="level2">
+<h2 class="anchored" data-anchor-id="model-fits">Model fits</h2>
+<section id="construct-data-sets-for-model-fitting" class="level3">
+<h3 class="anchored" data-anchor-id="construct-data-sets-for-model-fitting">Construct data sets for model fitting</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis dataset contains 207 patients and 3704 datapoints (2977 above LLOD, 80%)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>There are a total of 207 patients in the database with a total of 3704 PCRs analysable
+19.63% of samples are below LOD
+check stan data formatting:</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>We are running all models with 4 chains and 4000 samples for each chain, discarding 2000 for burn-in and thining every 4, thus giving a total of 2000 posterior samples per model.</code></pre>
+</div>
+</div>
+</section>
+<section id="run-models" class="level3">
+<h3 class="anchored" data-anchor-id="run-models">Run models</h3>
+<p>main model selection</p>
+</section>
+</section>
+<section id="check-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="check-convergence">Check convergence</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/traceplots-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>trt_effect[1] trt_effect[2] 
+    0.9998584     1.0012358 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'pars' not specified. Showing first 10 parameters by default.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/traceplots-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>trt_effect[1] trt_effect[2] 
+    0.9996937     0.9994190 </code></pre>
+</div>
+</div>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="get-effects" class="level2">
+<h2 class="anchored" data-anchor-id="get-effects">Get effects</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Timepoint_ID'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/Figure_main-1.png" class="img-fluid figure-img" width="2700"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>For model setting 1
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -38   -34   -25   -16   -10 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.975
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -54   -52   -46   -39   -35 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   16    22    37    55    65 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   54    63    84   108   119 
+For model setting 2
+Molnupiravir relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -39   -35   -27   -18   -12 
+Probability that Molnupiravir is inferior to Nirmatrelvir+Ritonavir:
+[1] 0.9875
+No Study Drug relative to Nirmatrelvir+Ritonavir:
+ 2.5%   10%   50%   90% 97.5% 
+  -52   -49   -42   -35   -31 
+Molnupiravir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+    7    13    26    41    50 
+Nirmatrelvir+Ritonavir relative to No Study Drug:
+ 2.5%   10%   50%   90% 97.5% 
+   45    54    73    95   106 </code></pre>
+</div>
+</div>
+<p>All models</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/all_models_sensitivity-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/slopes_plot-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.5 (IQR 6.7 to 10.1)
+In Molnupiravir the median clearance half life was 11.6 (IQR 8.6 to 15.4)
+In No study drug the median clearance half life was 15.5 (IQR 11.9 to 21.2)</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/slopes_plot-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>In Nirmatrelvir + Ritonavir the median clearance half life was 8.2 (IQR 6.2 to 10)
+In Molnupiravir the median clearance half life was 10.9 (IQR 8.4 to 14.5)
+In No study drug the median clearance half life was 14.4 (IQR 11 to 19.9)</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/slopes_plot-3.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rebound" class="level2">
+<h2 class="anchored" data-anchor-id="rebound">Rebound</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>patient PLT-TH1-280 treated with No study drug had a rebound identified on day 6
+patient PLT-TH1-415 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 6
+patient PLT-TH1-415 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 7
+patient PLT-TH1-465 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-481 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 5
+patient PLT-TH1-511 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-543 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 14
+patient PLT-TH1-548 treated with Molnupiravir had a rebound identified on day 10
+patient PLT-TH1-630 treated with Nirmatrelvir + Ritonavir had a rebound identified on day 10</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PLT-TH1-280" "PLT-TH1-415" "PLT-TH1-465" "PLT-TH1-481" "PLT-TH1-511"
+[6] "PLT-TH1-543" "PLT-TH1-548" "PLT-TH1-630"</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/rebound_visual_assessment-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="residual-error" class="level2">
+<h2 class="anchored" data-anchor-id="residual-error">Residual error</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-3.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-4.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/residuals-5.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="individual-patient-data" class="level2">
+<h2 class="anchored" data-anchor-id="individual-patient-data">Individual patient data</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in par(mfrow = c(3, 3), par = c(2, 2, 1, 2), las = 1): "par" is not a
+graphical parameter</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-2.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-3.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-4.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-5.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-6.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-7.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-8.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-9.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-10.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-11.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-12.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-13.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-14.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-15.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-16.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-17.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-18.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-19.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-20.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-21.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-22.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-23.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/individual_curves-24.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fever-and-symptom-clearance" class="level1">
+<h1>Fever and symptom clearance</h1>
+<section id="fever" class="level2">
+<h2 class="anchored" data-anchor-id="fever">fever</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 7510 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): ID
+dbl (3): Time, ax_temperature, Fever_Baseline
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 76</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(clearance_time, clearance_time_cens) ~ 
+    Trt, data = temp_clearance)
+
+                              N Observed Expected (O-E)^2/E (O-E)^2/V
+Trt=Nirmatrelvir + Ritonavir 24       24     17.3    2.6296    3.5307
+Trt=Molnupiravir             24       24     24.7    0.0196    0.0303
+Trt=No study drug            28       28     34.0    1.0722    2.0170
+
+ Chisq= 3.9  on 2 degrees of freedom, p= 0.1 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/fever_clearance-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="symptoms" class="level2">
+<h2 class="anchored" data-anchor-id="symptoms">Symptoms</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(Symptom_resolution, symp_censored) ~ 
+    Trt, data = platcov_symp)
+
+                              N Observed Expected (O-E)^2/E (O-E)^2/V
+Trt=Nirmatrelvir + Ritonavir 58       45     39.9     0.646      1.05
+Trt=Molnupiravir             65       55     43.5     3.061      5.14
+Trt=No study drug            84       58     74.6     3.700      8.60
+
+ Chisq= 9.1  on 2 degrees of freedom, p= 0.01 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Molnupiravir_analysis_files/figure-html/symptom_resolution-1.png" class="img-fluid figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE  TRUE  &lt;NA&gt; 
+   93    65    49 </code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

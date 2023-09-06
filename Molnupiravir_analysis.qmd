@@ -121,6 +121,7 @@ tab.ff <- Baseline_data %>% filter(mITT) %>%
     add_row_total = TRUE, # add column with number of valid cases
     include_row_missing_col = FALSE,
     add_dependent_label = T,
+    cont = 'median',digits=c(1, 1, 3, 1, 0),
     na_include = TRUE # make variables' missing data explicit
   ) %>%
   kbl(

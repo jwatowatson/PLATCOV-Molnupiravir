@@ -9,7 +9,7 @@ editor: visual
 knitr::opts_chunk$set(cache = F, cache.comments = FALSE,
                       echo = F, include = TRUE, 
                       fig.width = 8, fig.height = 8,
-                      fig.pos = 'H',dev = 'png', dpi = 300)
+                      fig.pos = 'H',dev = 'pdf', dpi = 300)
 
 ```
 
@@ -94,7 +94,8 @@ platcov_dat = platcov_dat %>% ungroup() %>%
          Trt = factor(Trt, levels=c(ref_arm, trts)),
          Vaccinated = as.factor(ifelse(N_dose>0,'Yes','No')),
          Variant = as.factor(Variant),
-         Study_time = as.numeric(difftime(Rand_date,min(Rand_date),units = 'weeks')),
+         Study_time = as.numeric(difftime(Rand_date,min(Rand_date),
+                                          units = 'weeks')),
          Study_time = scale(Study_time),
          trt_color = 
            as.character(plyr::mapvalues(Trt,
@@ -145,7 +146,7 @@ platcov_dat_analysis =
          Mean_age = mean(Age[!duplicated(ID)]),
          SD_age = sd(Age[!duplicated(ID)]),
          Age_scaled = (Age-Mean_age)/SD_age,
-         Symptom_onset = ifelse(is.na(Symptom_onset),2,Symptom_onset),) 
+         Symptom_onset = ifelse(is.na(Symptom_onset),2,Symptom_onset)) 
 
 
 writeLines(sprintf('Analysis dataset contains %s patients and %s datapoints (%s above LLOD, %s%%)',
@@ -243,6 +244,7 @@ for(i in 1:length(ff)){
 par(las=1, mar=c(5,5,2,2),cex.lab=1.3, cex.axis=1.3, mfrow=c(1,2))
 plot_serial_data(xx = platcov_dat_analysis %>% mutate(Trt=gsub(pattern='+ Ritonavir',replacement='',x = Trt,fixed = T)),xlims = c(0,7),
                  plot_points = T,alpha.f = .1)
+mtext(text = 'a',side = 3,line = 0.5,adj = 0,cex = 1.5)
 
 par(las=1, mar=c(5,8,2,2))
 plot_effect_estimates(effect_ests = effect_ests,
@@ -253,6 +255,7 @@ plot_effect_estimates(effect_ests = effect_ests,
 # title(intervention)
 legend('bottomright',pch=15:16,legend = c('Linear','Non-linear'),
        col = model_cols,inset=0.03, cex=1.2)
+mtext(text = 'b',side = 3,line = 0.5,adj = 0,cex = 1.5)
 
 for(i in 1:length(ff)){
   load(ff[i])
@@ -284,8 +287,6 @@ theta_trt = rstan::extract(out, pars='trt_effect')$trt_effect
 colnames(theta_trt) = gsub(pattern = 'Trt',replacement = '',x = colnames(stan_inputs$Trt_matrix)[-1])
 
 mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
-mean(theta_trt[,'Molnupiravir'] > theta_trt[,'Remdesivir'])
-
 ```
 
 # Fever and symptom clearance

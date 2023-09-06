@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">cache =</span> F, <span class="at">cache.comments =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">echo =</span> F, <span class="at">include =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.width =</span> <span class="dv">8</span>, <span class="at">fig.height =</span> <span class="dv">8</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.pos =</span> <span class="st">'H'</span>,<span class="at">dev =</span> <span class="st">'png'</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fig.pos =</span> <span class="st">'H'</span>,<span class="at">dev =</span> <span class="st">'pdf'</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
@@ -274,13 +274,15 @@ Missing patients in No study drug arm:
  [56] "PLT-TH1-889"  "PLT-TH1-890"  "PLT-TH1-892"  "PLT-TH1-908"  "PLT-TH1-911" 
  [61] "PLT-TH1-915"  "PLT-TH1-924"  "PLT-TH1-934"  "PLT-TH1-936"  "PLT-TH1-937" 
  [66] "PLT-TH1-943"  "PLT-TH1-948"  "PLT-TH1-950"  "PLT-TH1-954"  "PLT-TH1-956" 
- [71] "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009" "PLT-TH57-010"
- [76] "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017"  "PLT-BR3-021" 
- [81] "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038"  "PLT-BR3-041" 
- [86] "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057"  "PLT-BR3-060" 
- [91] "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071"  "PLT-BR3-082" 
- [96] "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090"  "PLT-BR3-092"  "PLT-BR3-094" 
-[101] "PLT-BR3-096"  NA             "PLT-BR3-102" 
+ [71] "PLT-TH1-960"  "PLT-TH1-965"  "PLT-TH1-966"  "PLT-TH1-979"  "PLT-TH1-981" 
+ [76] "PLT-TH1-984"  "PLT-TH1-986"  "PLT-TH1-989"  "PLT-TH1-995"  "PLT-TH1-999" 
+ [81] "PLT-TH1-1001" "PLT-TH58-002" "PLT-TH58-004" "PLT-TH57-002" "PLT-TH57-009"
+ [86] "PLT-TH57-010" "PLT-BR3-002"  "PLT-BR3-004"  "PLT-BR3-008"  "PLT-BR3-017" 
+ [91] "PLT-BR3-021"  "PLT-BR3-030"  "PLT-BR3-031"  "PLT-BR3-032"  "PLT-BR3-038" 
+ [96] "PLT-BR3-041"  "PLT-BR3-044"  "PLT-BR3-050"  "PLT-BR3-055"  "PLT-BR3-057" 
+[101] "PLT-BR3-060"  "PLT-BR3-064"  "PLT-BR3-066"  "PLT-BR3-069"  "PLT-BR3-071" 
+[106] "PLT-BR3-082"  "PLT-BR3-085"  "PLT-BR3-086"  "PLT-BR3-090"  "PLT-BR3-092" 
+[111] "PLT-BR3-094"  "PLT-BR3-096"  NA             "PLT-BR3-102" 
 Missing patients in Favipiravir arm:
  [1] "PLT-TH57-004" "PLT-TH57-006" "PLT-BR3-001"  "PLT-BR3-005"  "PLT-BR3-007" 
  [6] "PLT-BR3-009"  "PLT-BR3-014"  "PLT-BR3-015"  "PLT-BR3-023"  "PLT-BR3-025" 
@@ -304,8 +306,10 @@ Missing patients in Nirmatrelvir + Ritonavir arm:
 [56] "PLT-TH1-877" "PLT-TH1-879" "PLT-TH1-886" "PLT-TH1-894" "PLT-TH1-896"
 [61] "PLT-TH1-897" "PLT-TH1-902" "PLT-TH1-913" "PLT-TH1-917" "PLT-TH1-918"
 [66] "PLT-TH1-920" "PLT-TH1-940" "PLT-TH1-941" "PLT-TH1-942" "PLT-TH1-945"
-[71] "PLT-TH1-946" "PLT-TH1-947" "PLT-BR3-098" "PLT-BR3-099" NA           
-[76] "PLT-BR3-101"</code></pre>
+[71] "PLT-TH1-946" "PLT-TH1-947" "PLT-TH1-959" "PLT-TH1-962" "PLT-TH1-969"
+[76] "PLT-TH1-970" "PLT-TH1-972" "PLT-TH1-975" "PLT-TH1-978" "PLT-TH1-980"
+[81] "PLT-TH1-987" "PLT-TH1-988" "PLT-TH1-993" "PLT-TH1-997" "PLT-BR3-098"
+[86] "PLT-BR3-099" NA            "PLT-BR3-101" "PLT-BR3-103"</code></pre>
 </div>
 </div>
 </section>
@@ -323,7 +327,7 @@ Intervention               FALSE TRUE
   Remdesivir                   0   54</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2021-09-30 BST" "2023-02-15 GMT"</code></pre>
+<pre><code>[1] "2021-09-30 +07" "2023-02-15 +07"</code></pre>
 </div>
 </div>
 </section>
@@ -563,7 +567,7 @@ check stan data formatting:</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/traceplots-1.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/traceplots-1.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
@@ -573,7 +577,7 @@ check stan data formatting:</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/traceplots-2.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/traceplots-2.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
@@ -587,7 +591,7 @@ check stan data formatting:</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/Meta_analysis_main-1.png" class="img-fluid figure-img" width="2700"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/Meta_analysis_main-1.pdf" class="img-fluid" width="2700"></p>
 </figure>
 </div>
 </div>
@@ -641,9 +645,6 @@ For model setting 2
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.61</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.61</code></pre>
-</div>
 </div>
 </section>
 <section id="fever-and-symptom-clearance" class="level1">
@@ -680,7 +681,7 @@ Trt=Nirmatrelvir + Ritonavir 24       24     15.0    5.4231    6.0671
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/fever_clearance-1.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/fever_clearance-1.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
@@ -690,17 +691,17 @@ Trt=Nirmatrelvir + Ritonavir 24       24     15.0    5.4231    6.0671
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-1.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-1.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In No study drug the median clearance half life was 13.7 (range 3.6 to 39.3)
-In Ivermectin the median clearance half life was 15.9 (range 4.9 to 38)
-In Remdesivir the median clearance half life was 12.3 (range 4.4 to 32.6)
-In Favipiravir the median clearance half life was 14.4 (range 4.1 to 31.2)
-In Molnupiravir the median clearance half life was 10.8 (range 4.7 to 26.1)
-In Nirmatrelvir + Ritonavir the median clearance half life was 7.9 (range 3.2 to 22.4)</code></pre>
+<pre><code>In No study drug the median clearance half life was 13.7 (IQR 10.8 to 19.8)
+In Ivermectin the median clearance half life was 15.9 (IQR 13.4 to 21.2)
+In Remdesivir the median clearance half life was 12.3 (IQR 8.9 to 16.3)
+In Favipiravir the median clearance half life was 14.4 (IQR 10.8 to 19.3)
+In Molnupiravir the median clearance half life was 10.8 (IQR 8.2 to 14.6)
+In Nirmatrelvir + Ritonavir the median clearance half life was 7.9 (IQR 6.2 to 10)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -732,14 +733,14 @@ Residual standard error: 0.3023 on 173 degrees of freedom</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-2.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-2.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-3.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/viral_clearance_vs_fever-3.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
@@ -767,7 +768,7 @@ Trt=Nirmatrelvir + Ritonavir  58       45     39.5    0.7746    1.0659
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Meta_analysis_IPD_files/figure-html/symptom_clearance-1.png" class="img-fluid figure-img" width="2400"></p>
+<p><embed src="Meta_analysis_IPD_files/figure-html/symptom_clearance-1.pdf" class="img-fluid" width="2400"></p>
 </figure>
 </div>
 </div>
